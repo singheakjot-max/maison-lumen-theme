@@ -1,0 +1,1178 @@
+{% render 'maison-vars' %}
+<style>
+
+/* ===== ml-hero ===== */
+.ml-hero { position: relative; min-height: 88vh; background: var(--ml-tan); overflow: hidden; }
+  .ml-hero-img { position: absolute; inset: 0; }
+  .ml-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-hero-img.no-img { background: linear-gradient(135deg, var(--ml-tan-deep), var(--ml-sand)); }
+  .ml-hero-img.no-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 70% 40%, rgba(232,184,113,0.3), transparent 40%),
+      radial-gradient(circle at 30% 70%, rgba(61,36,24,0.2), transparent 50%);
+  }
+  .ml-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 88px 48px 64px;
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--ml-ink);
+  }
+  .ml-hero-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-ink);
+    margin-bottom: 16px;
+    opacity: 0.85;
+  }
+  .ml-hero h1 {
+    font-family: var(--ml-serif);
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    color: var(--ml-ink);
+    max-width: 720px;
+  }
+  .ml-hero h1 em { font-style: italic; font-weight: 300; color: var(--ml-ink); }
+  .ml-hero-sub {
+    font-size: 15px;
+    color: var(--ml-ink);
+    line-height: 1.6;
+    max-width: 460px;
+    margin-bottom: 28px;
+    opacity: 0.85;
+  }
+  .ml-hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 900px) {
+    .ml-hero { min-height: auto; }
+    .ml-hero-inner { padding: 60px 20px 40px; min-height: 80vh; }
+    .ml-hero h1 { font-size: 44px; }
+  }
+
+/* ===== ml-proof ===== */
+.ml-proof { padding: 96px 48px; background: var(--ml-cream); }
+  .ml-proof-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; }
+  .ml-proof-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    margin-bottom: 18px;
+  }
+  .ml-proof h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(44px, 5.5vw, 64px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ml-ink);
+    margin-bottom: 24px;
+  }
+  .ml-proof h2 em { font-style: italic; color: var(--ml-ink); font-weight: 300; }
+  .ml-proof-stars { color: var(--ml-honey-deep); font-size: 14px; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .ml-proof-product-name {
+    font-family: var(--ml-serif);
+    font-size: 19px;
+    color: var(--ml-ink);
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .ml-proof-product-name .price { color: var(--ml-ink); margin-left: 8px; }
+  .ml-proof p { font-size: 14px; color: var(--ml-charcoal); line-height: 1.65; max-width: 440px; margin-bottom: 12px; }
+  .ml-proof p.italic { font-style: italic; color: var(--ml-brown); }
+  .ml-proof-cta { margin-top: 20px; }
+
+  /* The signature visual — bottle on warm tan with ingredient bubbles floating */
+  .ml-proof-visual {
+    aspect-ratio: 1;
+    background: var(--ml-tan);
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 24px;
+  }
+  .ml-proof-visual::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 36%;
+    background: linear-gradient(180deg, transparent, rgba(61,36,24,0.08));
+  }
+  .ml-proof-bottle {
+    position: relative;
+    z-index: 2;
+    max-height: 80%;
+    max-width: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 30px 40px rgba(61,36,24,0.25));
+  }
+  .ml-proof-bottle-fallback {
+    width: 140px;
+    height: 320px;
+    background: linear-gradient(180deg, #5C2E1A 0%, #2E1408 100%);
+    border-radius: 6px 6px 18px 18px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 30px 50px rgba(61,36,24,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ml-proof-bottle-fallback::before {
+    content: '';
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 56px;
+    background: linear-gradient(180deg, #1A0A04, #000);
+    border-radius: 4px 4px 0 0;
+  }
+  .ml-proof-bottle-label {
+    background: var(--ml-cream);
+    width: 78%;
+    padding: 12px 8px;
+    text-align: center;
+    font-family: var(--ml-serif);
+  }
+  .ml-proof-bottle-label .brand { font-size: 17px; color: var(--ml-ink); letter-spacing: 0.05em; line-height: 1; }
+  .ml-proof-bottle-label .product { font-size: 11px; color: var(--ml-brown); margin-top: 4px; letter-spacing: 0.04em; }
+  .ml-proof-bottle-label .tag { font-size: 7px; letter-spacing: 0.18em; color: var(--ml-honey-deep); margin-top: 6px; text-transform: uppercase; font-family: var(--ml-body); font-weight: 600; }
+
+  /* Ingredient bubbles */
+  .ml-ing {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--ml-cream);
+    box-shadow: 0 8px 24px rgba(61,36,24,0.18);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+  }
+  .ml-ing-img { width: 44px; height: 44px; border-radius: 50%; background: var(--ml-tan); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .ml-ing-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .ml-ing-name { font-family: var(--ml-serif); font-size: 12px; color: var(--ml-ink); letter-spacing: 0.02em; }
+  .ml-ing.tl { top: 14%; left: 6%; }
+  .ml-ing.tr { top: 14%; right: 6%; }
+  .ml-ing.bl { bottom: 22%; left: 6%; }
+  .ml-ing.br { bottom: 22%; right: 6%; }
+
+  @media (max-width: 900px) {
+    .ml-proof { padding: 64px 20px; }
+    .ml-proof-grid { grid-template-columns: 1fr; gap: 36px; }
+    .ml-ing { width: 72px; height: 72px; }
+    .ml-ing-img { width: 32px; height: 32px; font-size: 14px; }
+    .ml-ing-name { font-size: 10px; }
+  }
+
+/* ===== ml-shop-grid ===== */
+.ml-shop { padding: 96px 48px; background: var(--ml-white); }
+  .ml-shop-head { text-align: center; max-width: 880px; margin: 0 auto 56px; }
+  .ml-shop h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    color: var(--ml-ink);
+    margin-bottom: 14px;
+  }
+  .ml-shop h2 em { font-style: italic; color: var(--ml-ink); font-weight: 300; }
+  .ml-shop-head p { font-size: 14px; color: var(--ml-charcoal); max-width: 580px; margin: 0 auto; }
+  .ml-shop-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .ml-prod { display: block; position: relative; }
+  .ml-prod-img {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    margin-bottom: 14px;
+    transition: transform 0.3s;
+  }
+  .ml-prod:hover .ml-prod-img { transform: translateY(-3px); }
+  .ml-prod-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .ml-prod-img.bg-1 { background: var(--ml-cream); }
+  .ml-prod-img.bg-2 { background: var(--ml-tan); }
+  .ml-prod-img.bg-3 { background: var(--ml-amber-bg); }
+  .ml-prod-img.bg-4 { background: var(--ml-cream-warm); }
+  .ml-prod-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--ml-honey);
+    color: var(--ml-ink);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    z-index: 2;
+  }
+  .ml-prod h4 {
+    font-family: var(--ml-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ml-ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .ml-prod-price { font-family: var(--ml-body); font-size: 13px; color: var(--ml-charcoal); font-weight: 500; margin-bottom: 4px; }
+  .ml-prod-price .was { color: var(--ml-grey); text-decoration: line-through; margin-right: 6px; }
+  .ml-prod-stars { color: var(--ml-honey-deep); font-size: 11px; letter-spacing: 0.06em; }
+  .ml-prod.coming { pointer-events: none; }
+  .ml-prod.coming .ml-prod-tag { background: var(--ml-ink); color: var(--ml-cream); }
+  .ml-prod-shop-cta { display: block; text-align: center; margin-top: 36px; }
+  .ml-prod-shop-cta a {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-ink);
+    border-bottom: 1px solid var(--ml-ink);
+    padding-bottom: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .ml-shop { padding: 64px 20px; }
+    .ml-shop-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  }
+
+/* ===== ml-split ===== */
+.ml-split { padding: 0; background: var(--ml-cream); }
+  .ml-split.bg-white { background: var(--ml-white); }
+  .ml-split.bg-tan { background: var(--ml-tan); }
+  .ml-split-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  .ml-split.reverse .ml-split-inner { grid-template-columns: 1fr 1fr; direction: rtl; }
+  .ml-split.reverse .ml-split-inner > * { direction: ltr; }
+  .ml-split-img { aspect-ratio: 4/3; overflow: hidden; background: var(--ml-tan-deep); }
+  .ml-split-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-split-text { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; }
+  .ml-split-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    margin-bottom: 16px;
+  }
+  .ml-split h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(34px, 4vw, 50px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    color: var(--ml-ink);
+    margin-bottom: 20px;
+    max-width: 460px;
+  }
+  .ml-split h2 em { font-style: italic; font-weight: 300; color: var(--ml-ink); }
+  .ml-split-list { margin-bottom: 16px; }
+  .ml-split-list li {
+    font-size: 14px;
+    color: var(--ml-charcoal);
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ml-split-list li::before { content: attr(data-icon); font-size: 14px; }
+  .ml-split-body { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 440px; margin-bottom: 24px; }
+  @media (max-width: 900px) {
+    .ml-split-inner, .ml-split.reverse .ml-split-inner { grid-template-columns: 1fr; }
+    .ml-split-text { padding: 32px 20px 48px; }
+  }
+
+/* ===== ml-pure-natural ===== */
+.ml-pure { padding: 80px 48px; background: var(--ml-white); }
+  .ml-pure-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ml-pure-img { aspect-ratio: 4/3; background: var(--ml-tan); border-radius: 4px; overflow: hidden; }
+  .ml-pure-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-pure-text { padding: 20px; }
+  .ml-pure-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    margin-bottom: 18px;
+  }
+  .ml-pure h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(40px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ml-ink);
+    margin-bottom: 22px;
+  }
+  .ml-pure h2 em { font-style: italic; font-weight: 300; color: var(--ml-ink); }
+  .ml-pure h2 .circled {
+    display: inline-block;
+    padding: 4px 16px 6px;
+    position: relative;
+  }
+  .ml-pure h2 .circled::before {
+    content: '';
+    position: absolute;
+    inset: -4px -10px;
+    border: 2.5px solid var(--ml-honey-deep);
+    border-radius: 50%;
+    transform: rotate(-3deg);
+    pointer-events: none;
+  }
+  .ml-pure-body { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 440px; }
+  .ml-pure-strip {
+    background: var(--ml-honey);
+    color: var(--ml-ink);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 14px 0;
+    margin-top: 56px;
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .ml-pure-strip-track { display: inline-block; animation: ml-pure-scroll 30s linear infinite; }
+  .ml-pure-strip-track span { padding: 0 24px; }
+  .ml-pure-strip-track span::after { content: '✦'; margin-left: 24px; color: var(--ml-brown); }
+  @keyframes ml-pure-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @media (max-width: 900px) {
+    .ml-pure { padding: 56px 20px; }
+    .ml-pure-grid { grid-template-columns: 1fr; gap: 28px; }
+    .ml-pure-text { padding: 0; }
+  }
+
+/* ===== ml-trust-strip ===== */
+.ml-trust { padding: 56px 48px; background: var(--ml-white); }
+  .ml-trust-head { text-align: center; margin-bottom: 32px; }
+  .ml-trust-rating-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ml-body);
+    font-size: 13px;
+    color: var(--ml-charcoal);
+  }
+  .ml-trust-rating-line strong { font-weight: 700; }
+  .ml-trust-rating-line .stars { color: var(--ml-honey-deep); font-size: 14px; letter-spacing: 0.08em; }
+  .ml-trust-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ml-trust-card {
+    background: var(--ml-white);
+    border: 1px solid var(--ml-line);
+    padding: 16px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ml-trust-card-stars { color: var(--ml-honey-deep); font-size: 12px; letter-spacing: 0.05em; }
+  .ml-trust-card h5 {
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ml-ink);
+    margin: 0;
+  }
+  .ml-trust-card p { font-size: 12px; color: var(--ml-charcoal); line-height: 1.5; flex: 1; }
+  .ml-trust-card-author { font-size: 11px; color: var(--ml-grey); font-weight: 500; }
+  .ml-trust-foot {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--ml-charcoal);
+  }
+  .ml-trust-foot strong { color: var(--ml-ink); }
+  @media (max-width: 900px) {
+    .ml-trust { padding: 40px 16px; }
+    .ml-trust-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  }
+
+/* ===== ml-about ===== */
+.ml-about { padding: 80px 48px; background: var(--ml-cream); }
+  .ml-about-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ml-about-img { aspect-ratio: 4/5; background: var(--ml-tan); border-radius: 4px; overflow: hidden; }
+  .ml-about-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-about-text { padding: 0 20px; }
+  .ml-about-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    margin-bottom: 18px;
+  }
+  .ml-about h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(40px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ml-ink);
+    margin-bottom: 22px;
+  }
+  .ml-about h2 em { font-style: italic; font-weight: 300; }
+  .ml-about h2 .hl {
+    background: var(--ml-honey);
+    padding: 0 8px 4px;
+  }
+  .ml-about-body { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 460px; margin-bottom: 24px; }
+  @media (max-width: 900px) {
+    .ml-about { padding: 56px 20px; }
+    .ml-about-grid { grid-template-columns: 1fr; gap: 28px; }
+    .ml-about-text { padding: 0; }
+  }
+
+/* ===== ml-bundle-it-up ===== */
+.ml-bundles { padding: 80px 48px; background: var(--ml-cream); }
+  .ml-bundles-head { max-width: 1180px; margin: 0 auto 36px; }
+  .ml-bundles-eyebrow { font-family: var(--ml-body); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--ml-brown); margin-bottom: 12px; }
+  .ml-bundles h2 { font-family: var(--ml-serif); font-size: clamp(40px, 5vw, 60px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; color: var(--ml-ink); margin-bottom: 10px; }
+  .ml-bundles h2 em { font-style: italic; font-weight: 300; }
+  .ml-bundles-sub { font-size: 14px; color: var(--ml-charcoal); }
+  .ml-bundles-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ml-bundle { display: block; position: relative; }
+  .ml-bundle-img { aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; padding: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; transition: transform 0.3s; }
+  .ml-bundle:hover .ml-bundle-img { transform: translateY(-3px); }
+  .ml-bundle-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .ml-bundle-img.bg-1 { background: var(--ml-tan); }
+  .ml-bundle-img.bg-2 { background: var(--ml-amber-bg); }
+  .ml-bundle-img.bg-3 { background: var(--ml-tan-deep); }
+  .ml-bundle-tag { position: absolute; top: 12px; left: 12px; background: var(--ml-honey); color: var(--ml-ink); font-size: 10px; font-weight: 700; padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.06em; z-index: 2; }
+  .ml-bundle h4 { font-family: var(--ml-serif); font-size: 17px; font-weight: 400; color: var(--ml-ink); line-height: 1.2; margin-bottom: 4px; }
+  .ml-bundle-price { font-size: 13px; color: var(--ml-charcoal); font-weight: 500; }
+  .ml-bundle-stars { color: var(--ml-honey-deep); font-size: 11px; margin-top: 4px; letter-spacing: 0.06em; }
+  @media (max-width: 900px) {
+    .ml-bundles { padding: 56px 20px; }
+    .ml-bundles-grid { grid-template-columns: 1fr; }
+  }
+
+/* ===== ml-promise ===== */
+.ml-promise { padding: 80px 48px; background: var(--ml-cream); }
+  .ml-promise-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ml-promise-text { padding: 0 20px; }
+  .ml-promise h2 { font-family: var(--ml-serif); font-size: clamp(40px, 5vw, 60px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; color: var(--ml-ink); margin-bottom: 20px; }
+  .ml-promise h2 em { font-style: italic; font-weight: 300; }
+  .ml-promise p { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 440px; margin-bottom: 24px; }
+  .ml-promise-img { aspect-ratio: 1.1; background: var(--ml-tan); border-radius: 4px; overflow: hidden; }
+  .ml-promise-img img { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 900px) { .ml-promise { padding: 56px 20px; } .ml-promise-grid { grid-template-columns: 1fr; gap: 28px; } .ml-promise-text { padding: 0; } }
+
+/* ===== ml-newsletter ===== */
+.ml-news { padding: 56px 48px; background: var(--ml-white); }
+  .ml-news-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .ml-news h3 { font-family: var(--ml-serif); font-size: 34px; font-weight: 300; line-height: 1; color: var(--ml-ink); margin-bottom: 6px; }
+  .ml-news p { font-size: 13px; color: var(--ml-charcoal); }
+  .ml-news-form { display: flex; border-bottom: 1px solid var(--ml-ink); padding-bottom: 4px; }
+  .ml-news-form input { flex: 1; border: none; background: transparent; padding: 10px 0; font-family: inherit; font-size: 14px; color: var(--ml-ink); outline: none; }
+  .ml-news-form input::placeholder { color: var(--ml-grey); }
+  .ml-news-form button { color: var(--ml-ink); padding: 8px; font-size: 16px; }
+  @media (max-width: 900px) { .ml-news { padding: 40px 20px; } .ml-news-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+</style>
+
+<!-- ===== ml-hero ===== -->
+<section class="ml-section ml-hero">
+  <div class="ml-hero-img {% unless section.settings.hero_image %}no-img{% endunless %}">
+    {% if section.settings.hero_image %}
+      <img src="{{ section.settings.hero_image | image_url: width: 2400 }}" alt="">
+    {% endif %}
+  </div>
+  <div class="ml-hero-inner">
+    {% if section.settings.hero_eyebrow != blank %}
+      <div class="ml-hero-eyebrow">{{ section.settings.hero_eyebrow }}</div>
+    {% endif %}
+    <h1>{{ section.settings.hero_heading | default: '<p>Live your <em>Maison Lumen</em> life.</p>' }}</h1>
+    {% if section.settings.hero_subtitle != blank %}
+      <p class="ml-hero-sub">{{ section.settings.hero_subtitle }}</p>
+    {% endif %}
+    <div class="ml-hero-ctas">
+      {% if section.settings.hero_cta_text != blank %}
+        <a href="{% if section.settings.hero_featured_product %}{{ section.settings.hero_featured_product.url }}{% else %}{{ section.settings.hero_cta_link | default: '/collections/all' }}{% endif %}" class="ml-btn-solid">{{ section.settings.hero_cta_text }}</a>
+      {% endif %}
+      {% if section.settings.hero_cta2_text != blank %}
+        <a href="{{ section.settings.hero_cta2_link | default: '/pages/about' }}" class="ml-btn-outline">{{ section.settings.hero_cta2_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ml-proof ===== -->
+<section class="ml-section ml-proof">
+  <div class="ml-proof-grid">
+    <div>
+      {% if section.settings.proof_eyebrow != blank %}
+        <div class="ml-proof-eyebrow">{{ section.settings.proof_eyebrow }}</div>
+      {% endif %}
+      <h2>{{ section.settings.proof_heading | default: '<p>Loved by <em>380,000+</em></p>' }}</h2>
+      <div class="ml-proof-stars">★★★★★</div>
+      {% if section.settings.proof_featured_product %}
+        <div class="ml-proof-product-name">
+          {{ section.settings.proof_featured_product.title }}
+          {% if section.settings.proof_featured_product.price %}<span class="price">{{ section.settings.proof_featured_product.price | money }}</span>{% endif %}
+        </div>
+      {% endif %}
+      <p>{{ section.settings.proof_body | default: 'Centuries of feminine wisdom captured in a single bottle, restoring softness, firmness, and radiance.' }}</p>
+      {% if section.settings.proof_body2 != blank %}
+        <p class="italic">{{ section.settings.proof_body2 }}</p>
+      {% endif %}
+      {% if section.settings.proof_cta_text != blank %}
+        <div class="ml-proof-cta">
+          <a href="{% if section.settings.proof_featured_product %}{{ section.settings.proof_featured_product.url }}{% else %}{{ section.settings.proof_cta_link | default: '/collections/all' }}{% endif %}" class="ml-btn-solid">{{ section.settings.proof_cta_text }}</a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="ml-proof-visual">
+      {% for block in section.blocks %}
+        <div class="ml-ing {{ block.settings.position }}" {{ block.shopify_attributes }}>
+          <div class="ml-ing-img">
+            {% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 200 }}" alt="">{% else %}{{ block.settings.emoji | default: '✿' }}{% endif %}
+          </div>
+          <div class="ml-ing-name">{{ block.settings.name }}</div>
+        </div>
+      {% endfor %}
+      {% if section.settings.proof_featured_product and section.settings.proof_featured_product.featured_image %}
+        <img src="{{ section.settings.proof_featured_product.featured_image | image_url: width: 1000 }}" alt="" class="ml-proof-bottle">
+      {% elsif section.settings.proof_bottle_image %}
+        <img src="{{ section.settings.proof_bottle_image | image_url: width: 1000 }}" alt="" class="ml-proof-bottle">
+      {% else %}
+        <div class="ml-proof-bottle-fallback">
+          <div class="ml-proof-bottle-label">
+            <div class="brand">MAISON LUMEN</div>
+            <div class="product">Magic Body Elixir</div>
+            <div class="tag">Firm · Plump · Hydrate</div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ml-shop-grid ===== -->
+<section class="ml-section ml-shop">
+  <div class="ml-shop-head">
+    <h2>{{ section.settings.shop_heading | default: '<p>The Alchemy of <em>Beauty.</em></p>' }}</h2>
+    <p>{{ section.settings.shop_subtitle | default: "Nature's richest beauty secrets, bottled for your daily ritual." }}</p>
+  </div>
+  <div class="ml-shop-grid">
+    {% for block in section.blocks %}
+      {% assign bg_class = forloop.index | modulo: 4 %}
+      {% case bg_class %}
+        {% when 1 %}{% assign bg = 'bg-1' %}
+        {% when 2 %}{% assign bg = 'bg-2' %}
+        {% when 3 %}{% assign bg = 'bg-3' %}
+        {% else %}{% assign bg = 'bg-4' %}
+      {% endcase %}
+      {% if block.type == 'product' %}
+        {% if block.settings.product %}
+          {% assign p = block.settings.product %}
+          <a href="{{ p.url }}" class="ml-prod" {{ block.shopify_attributes }}>
+            {% if block.settings.tag != blank %}<div class="ml-prod-tag">{{ block.settings.tag }}</div>{% endif %}
+            <div class="ml-prod-img {{ bg }}">
+              {% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 800 }}" alt="{{ p.title | escape }}">{% endif %}
+            </div>
+            <h4>{{ p.title }}</h4>
+            <div class="ml-prod-price">
+              {% if p.compare_at_price > p.price %}<span class="was">{{ p.compare_at_price | money }}</span>{% endif %}
+              From {{ p.price | money }}
+            </div>
+            <div class="ml-prod-stars">★★★★★</div>
+          </a>
+        {% endif %}
+      {% elsif block.type == 'coming_soon' %}
+        <div class="ml-prod coming" {{ block.shopify_attributes }}>
+          <div class="ml-prod-tag">Coming Soon</div>
+          <div class="ml-prod-img {{ bg }}">
+            {% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="">{% endif %}
+          </div>
+          <h4>{{ block.settings.title }}</h4>
+          <div class="ml-prod-price">{{ block.settings.subtitle | default: 'Join the waitlist' }}</div>
+          <div class="ml-prod-stars">★★★★★</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% if section.settings.shop_shop_all_link != blank %}
+    <div class="ml-prod-shop-cta">
+      <a href="{{ section.settings.shop_shop_all_link }}">{{ section.settings.shop_shop_all_label | default: 'Shop Now' }}</a>
+    </div>
+  {% endif %}
+</section>
+
+<!-- ===== ml-split ===== -->
+<section class="ml-section ml-split bg-{{ section.settings.split_bg }} {% if section.settings.split_reverse %}reverse{% endif %}">
+  <div class="ml-split-inner">
+    <div class="ml-split-img">
+      {% if section.settings.split_image %}<img src="{{ section.settings.split_image | image_url: width: 1600 }}" alt="">{% endif %}
+    </div>
+    <div class="ml-split-text">
+      {% if section.settings.split_eyebrow != blank %}<div class="ml-split-eyebrow">{{ section.settings.split_eyebrow }}</div>{% endif %}
+      <h2>{{ section.settings.split_heading | default: '<p>There''s A New Way <em>To Glow.</em></p>' }}</h2>
+      {% if section.blocks.size > 0 %}
+        <ul class="ml-split-list">
+          {% for block in section.blocks %}
+            <li data-icon="{{ block.settings.icon | default: '✦' }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <div class="ml-split-body">{{ section.settings.split_body | default: 'An ancient ritual of oil care, reimagined. Gently nourishes while drenching skin in moisture, transforming your daily ritual into a deeply sensory experience.' }}</div>
+      {% if section.settings.split_cta_text != blank %}
+        <div><a href="{{ section.settings.split_cta_link | default: '#' }}" class="ml-btn-solid">{{ section.settings.split_cta_text }}</a></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ml-pure-natural ===== -->
+<section class="ml-section ml-pure">
+  <div class="ml-pure-grid">
+    <div class="ml-pure-img">
+      {% if section.settings.pure_image %}<img src="{{ section.settings.pure_image | image_url: width: 1400 }}" alt="">{% endif %}
+    </div>
+    <div class="ml-pure-text">
+      {% if section.settings.pure_eyebrow != blank %}<div class="ml-pure-eyebrow">{{ section.settings.pure_eyebrow }}</div>{% endif %}
+      <h2>{{ section.settings.pure_heading | default: '<p>Pure. Natural. <span class="circled"><em>Ingredients</em></span></p>' }}</h2>
+      <p class="ml-pure-body">{{ section.settings.pure_body }}</p>
+    </div>
+  </div>
+  {% if section.settings.pure_strip_text != blank %}
+    <div class="ml-pure-strip">
+      <div class="ml-pure-strip-track">
+        {% for i in (1..3) %}<span>{{ section.settings.pure_strip_text }}</span>{% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<!-- ===== ml-trust-strip ===== -->
+<section class="ml-section ml-trust">
+  <div class="ml-trust-head">
+    <div class="ml-trust-rating-line">
+      <strong>{{ section.settings.trust_headline | default: 'Excellent' }}</strong>
+      <span class="stars">★★★★★</span>
+      <span>{{ section.settings.trust_platform | default: 'Trustpilot' }}</span>
+    </div>
+  </div>
+  <div class="ml-trust-grid">
+    {% for block in section.blocks %}
+      <div class="ml-trust-card" {{ block.shopify_attributes }}>
+        <div class="ml-trust-card-stars">★★★★★</div>
+        <h5>{{ block.settings.title }}</h5>
+        <p>{{ block.settings.body }}</p>
+        <div class="ml-trust-card-author">{{ block.settings.author }}{% if block.settings.meta != blank %}, {{ block.settings.meta }}{% endif %}</div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="ml-trust-foot">
+    Rated <strong>{{ section.settings.trust_rating | default: '4.8' }}</strong> / 5 based on <strong>{{ section.settings.trust_review_count | default: '9,866' }} reviews</strong>. Showing our 5 star reviews.
+  </div>
+</section>
+
+<!-- ===== ml-about ===== -->
+<section class="ml-section ml-about">
+  <div class="ml-about-grid">
+    <div class="ml-about-img">
+      {% if section.settings.about_image %}<img src="{{ section.settings.about_image | image_url: width: 1200 }}" alt="">{% endif %}
+    </div>
+    <div class="ml-about-text">
+      {% if section.settings.about_eyebrow != blank %}<div class="ml-about-eyebrow">{{ section.settings.about_eyebrow }}</div>{% endif %}
+      <h2>{{ section.settings.about_heading | default: '<p>It''s all about <span class="hl">you</span></p>' }}</h2>
+      <div class="ml-about-body">{{ section.settings.about_body }}</div>
+      {% if section.settings.about_cta_text != blank %}
+        <a href="{{ section.settings.about_cta_link | default: '/pages/about' }}" class="ml-btn-outline">{{ section.settings.about_cta_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ml-bundle-it-up ===== -->
+<section class="ml-section ml-bundles">
+  <div class="ml-bundles-head">
+    {% if section.settings.bundles_eyebrow != blank %}<div class="ml-bundles-eyebrow">{{ section.settings.bundles_eyebrow }}</div>{% endif %}
+    <h2>{{ section.settings.bundles_heading | default: '<p>Bundle <em>it up.</em></p>' }}</h2>
+    {% if section.settings.bundles_subtitle != blank %}<p class="ml-bundles-sub">{{ section.settings.bundles_subtitle }}</p>{% endif %}
+  </div>
+  <div class="ml-bundles-grid">
+    {% for block in section.blocks %}
+      {% assign bg_class = forloop.index | modulo: 3 %}
+      {% case bg_class %}
+        {% when 1 %}{% assign bg = 'bg-1' %}
+        {% when 2 %}{% assign bg = 'bg-2' %}
+        {% else %}{% assign bg = 'bg-3' %}
+      {% endcase %}
+      <a href="{% if block.settings.product %}{{ block.settings.product.url }}{% else %}{{ block.settings.link | default: '#' }}{% endif %}" class="ml-bundle" {{ block.shopify_attributes }}>
+        {% if block.settings.tag != blank %}<div class="ml-bundle-tag">{{ block.settings.tag }}</div>{% endif %}
+        <div class="ml-bundle-img {{ bg }}">
+          {% if block.settings.product and block.settings.product.featured_image %}
+            <img src="{{ block.settings.product.featured_image | image_url: width: 800 }}" alt="">
+          {% elsif block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="">
+          {% endif %}
+        </div>
+        <h4>{% if block.settings.product %}{{ block.settings.product.title }}{% else %}{{ block.settings.title }}{% endif %}</h4>
+        <div class="ml-bundle-price">{% if block.settings.product %}From {{ block.settings.product.price | money }}{% else %}{{ block.settings.price }}{% endif %}</div>
+        <div class="ml-bundle-stars">★★★★★</div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ===== ml-promise ===== -->
+<section class="ml-section ml-promise">
+  <div class="ml-promise-grid">
+    <div class="ml-promise-text">
+      <h2>{{ section.settings.promise_heading | default: '<p>Our Promise,<br><em>Always Natural.</em></p>' }}</h2>
+      <p>{{ section.settings.promise_body | default: 'All our products are sustainably sourced and produced using traditional techniques passed down as ancient family recipes.' }}</p>
+      {% if section.settings.promise_cta_text != blank %}
+        <a href="{{ section.settings.promise_cta_link | default: '/pages/about' }}" class="ml-btn-solid">{{ section.settings.promise_cta_text }}</a>
+      {% endif %}
+    </div>
+    <div class="ml-promise-img">
+      {% if section.settings.promise_image %}<img src="{{ section.settings.promise_image | image_url: width: 1200 }}" alt="">{% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ===== ml-newsletter ===== -->
+<section class="ml-section ml-news">
+  <div class="ml-news-grid">
+    <div>
+      <h3>{{ section.settings.news_heading | default: 'Stay in touch.' }}</h3>
+      <p>{{ section.settings.news_body | default: 'New collections, products and exclusive offers. Nothing else.' }}</p>
+    </div>
+    {% form 'customer', class: 'ml-news-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder | default: 'Your email' }}" required>
+      <button type="submit" aria-label="Subscribe">→</button>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maison Home",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Maison Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image (full-bleed)"
+    },
+    {
+      "type": "text",
+      "id": "hero_eyebrow",
+      "label": "Eyebrow",
+      "default": "[SPRING SKIN '26]"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "<p>Live Your <em>Maison Lumen</em> Life.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtitle",
+      "label": "Subtitle",
+      "default": "Luxury botanical body care. Pure, unrefined, and unadulterated. This is skincare as nature intended."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_text",
+      "label": "Primary CTA",
+      "default": "Shop All"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_link",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta2_text",
+      "label": "Secondary CTA",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta2_link",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "product",
+      "id": "hero_featured_product",
+      "label": "Featured product (overrides primary CTA link)"
+    },
+    {
+      "type": "header",
+      "content": "Maison Proof"
+    },
+    {
+      "type": "text",
+      "id": "proof_eyebrow",
+      "label": "Eyebrow",
+      "default": "PURE INGREDIENTS YOUR SKIN SEEKS"
+    },
+    {
+      "type": "richtext",
+      "id": "proof_heading",
+      "label": "Heading",
+      "default": "<p>Loved by <em>380,000+</em></p>"
+    },
+    {
+      "type": "product",
+      "id": "proof_featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "image_picker",
+      "id": "proof_bottle_image",
+      "label": "Bottle image (fallback if no product)"
+    },
+    {
+      "type": "textarea",
+      "id": "proof_body",
+      "label": "Body",
+      "default": "Centuries of feminine wisdom captured in a single bottle, restoring softness, firmness, and radiance."
+    },
+    {
+      "type": "textarea",
+      "id": "proof_body2",
+      "label": "Italic line below body",
+      "default": "An ancient formula specially crafted for you."
+    },
+    {
+      "type": "text",
+      "id": "proof_cta_text",
+      "label": "CTA text",
+      "default": "Take Me There"
+    },
+    {
+      "type": "url",
+      "id": "proof_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Maison Shop Grid"
+    },
+    {
+      "type": "richtext",
+      "id": "shop_heading",
+      "label": "Heading",
+      "default": "<p>The Alchemy of <em>Beauty.</em></p>"
+    },
+    {
+      "type": "text",
+      "id": "shop_subtitle",
+      "label": "Subtitle",
+      "default": "Nature's richest beauty secrets, bottled for your daily ritual."
+    },
+    {
+      "type": "text",
+      "id": "shop_shop_all_label",
+      "label": "Shop all label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "shop_shop_all_link",
+      "label": "Shop all link"
+    },
+    {
+      "type": "header",
+      "content": "Maison Lifestyle Split"
+    },
+    {
+      "type": "image_picker",
+      "id": "split_image",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "split_reverse",
+      "label": "Reverse (image right)",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "split_bg",
+      "label": "Background",
+      "default": "cream",
+      "options": [
+        {
+          "value": "cream",
+          "label": "Cream"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        },
+        {
+          "value": "tan",
+          "label": "Tan"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "split_eyebrow",
+      "label": "Eyebrow",
+      "default": "[A NEW RITUAL]"
+    },
+    {
+      "type": "richtext",
+      "id": "split_heading",
+      "label": "Heading",
+      "default": "<p>There's A New Way <em>To Glow.</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "split_body",
+      "label": "Body",
+      "default": "An ancient ritual of oil care, reimagined. Gently nourishes while drenching skin in moisture."
+    },
+    {
+      "type": "text",
+      "id": "split_cta_text",
+      "label": "CTA text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "split_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Maison Pure Natural"
+    },
+    {
+      "type": "image_picker",
+      "id": "pure_image",
+      "label": "Image (group of real women, etc.)"
+    },
+    {
+      "type": "text",
+      "id": "pure_eyebrow",
+      "label": "Eyebrow",
+      "default": "START LIVING YOUR MAISON LUMEN LIFE"
+    },
+    {
+      "type": "richtext",
+      "id": "pure_heading",
+      "label": "Heading (use <span class=\"circled\">word</span> to circle a word)",
+      "default": "<p>Pure. Natural. <span class=\"circled\"><em>Ingredients</em></span></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "pure_body",
+      "label": "Body",
+      "default": "We pride ourselves on sourcing only the purest and finest ingredients for our products. With a core focus on natural enabling women around the world to feel the powerful effects of truly natural, clean beauty."
+    },
+    {
+      "type": "text",
+      "id": "pure_strip_text",
+      "label": "Scrolling strip text (leave blank to hide)",
+      "default": "Real Ingredients. Real Women. Real Results."
+    },
+    {
+      "type": "header",
+      "content": "Maison Trust Strip"
+    },
+    {
+      "type": "text",
+      "id": "trust_headline",
+      "label": "Headline word",
+      "default": "Excellent"
+    },
+    {
+      "type": "text",
+      "id": "trust_platform",
+      "label": "Platform name",
+      "default": "Trustpilot"
+    },
+    {
+      "type": "text",
+      "id": "trust_rating",
+      "label": "Average rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "trust_review_count",
+      "label": "Review count",
+      "default": "9,866"
+    },
+    {
+      "type": "header",
+      "content": "Maison About"
+    },
+    {
+      "type": "image_picker",
+      "id": "about_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "about_eyebrow",
+      "label": "Eyebrow",
+      "default": "ABOUT US"
+    },
+    {
+      "type": "richtext",
+      "id": "about_heading",
+      "label": "Heading (use <span class=\"hl\">word</span> for honey highlight)",
+      "default": "<p>It's all about <span class=\"hl\">you</span></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "about_body",
+      "label": "Body",
+      "default": "Maison Lumen was founded to bring traditional, natural, age-old remedies passed down through heritage. Loving nature and everything natural, we are advocates of organic and pure living."
+    },
+    {
+      "type": "text",
+      "id": "about_cta_text",
+      "label": "CTA",
+      "default": "Read More"
+    },
+    {
+      "type": "url",
+      "id": "about_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Maison Bundle It Up"
+    },
+    {
+      "type": "text",
+      "id": "bundles_eyebrow",
+      "label": "Eyebrow",
+      "default": "MOST LOVED"
+    },
+    {
+      "type": "richtext",
+      "id": "bundles_heading",
+      "label": "Heading",
+      "default": "<p>Bundle <em>it up.</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "bundles_subtitle",
+      "label": "Subtitle",
+      "default": "Shop our bundles, perfect for an all in one body care ritual."
+    },
+    {
+      "type": "header",
+      "content": "Maison Our Promise"
+    },
+    {
+      "type": "richtext",
+      "id": "promise_heading",
+      "label": "Heading",
+      "default": "<p>Our Promise,<br><em>Always Natural.</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "promise_body",
+      "label": "Body",
+      "default": "All our products are sustainably sourced and produced using traditional techniques passed down as ancient family recipes."
+    },
+    {
+      "type": "image_picker",
+      "id": "promise_image",
+      "label": "Image (botanicals, ingredients, etc.)"
+    },
+    {
+      "type": "text",
+      "id": "promise_cta_text",
+      "label": "CTA",
+      "default": "Read More"
+    },
+    {
+      "type": "url",
+      "id": "promise_cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Maison Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "news_heading",
+      "label": "Heading",
+      "default": "Stay in touch."
+    },
+    {
+      "type": "text",
+      "id": "news_body",
+      "label": "Body",
+      "default": "New collections, products and exclusive offers. Nothing else."
+    },
+    {
+      "type": "text",
+      "id": "news_placeholder",
+      "label": "Placeholder",
+      "default": "Your email"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maison Home"
+    }
+  ]
+}
+{% endschema %}

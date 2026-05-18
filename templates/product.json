@@ -1,12 +1,7 @@
 {
   "sections": {
-    "main": { "type": "maison-product", "settings": {} },
-    "smooth_divine": { "type": "ml-smooth-divine", "settings": {} },
-    "big_test": { "type": "ml-big-testimonial", "settings": {} },
-    "embrace": { "type": "ml-embrace", "settings": {} },
-    "pdp_trust": { "type": "ml-pdp-trust", "settings": {} },
-    "reviews": { "type": "ml-reviews-wall", "settings": {} },
-    "clinicians": { "type": "ml-clinicians", "settings": {} }
+    "maison_product": { "type": "maison-product", "settings": {} },
+    "maison_pdp_extras": { "type": "maison-pdp-extras", "settings": {} }
   },
-  "order": ["main","smooth_divine","big_test","embrace","pdp_trust","reviews","clinicians"]
+  "order": ["maison_product", "maison_pdp_extras"]
 }

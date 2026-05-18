@@ -1,15 +1,6 @@
 {
   "sections": {
-    "hero": { "type": "ml-hero", "settings": {} },
-    "proof": { "type": "ml-proof", "settings": {} },
-    "shop_grid": { "type": "ml-shop-grid", "settings": {} },
-    "split": { "type": "ml-split", "settings": {} },
-    "pure": { "type": "ml-pure-natural", "settings": {} },
-    "trust": { "type": "ml-trust-strip", "settings": {} },
-    "about": { "type": "ml-about", "settings": {} },
-    "bundles": { "type": "ml-bundle-it-up", "settings": {} },
-    "promise": { "type": "ml-promise", "settings": {} },
-    "newsletter": { "type": "ml-newsletter", "settings": {} }
+    "maison_home": { "type": "maison-home", "settings": {} }
   },
-  "order": ["hero","proof","shop_grid","split","pure","trust","about","bundles","promise","newsletter"]
+  "order": ["maison_home"]
 }
