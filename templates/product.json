@@ -1,95 +1,413 @@
-{
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */{
   "sections": {
     "main": {
-      "type": "maison-product",
+      "type": "product-information",
       "blocks": {
-        "ing_almond": { "type": "ingredient", "settings": { "emoji": "🌰", "name": "Almond", "position": "tl" } },
-        "ing_primrose": { "type": "ingredient", "settings": { "emoji": "✿", "name": "Primrose", "position": "tr" } },
-        "ing_rosehip": { "type": "ingredient", "settings": { "emoji": "🌹", "name": "Rosehip", "position": "bl" } },
-        "ing_patchouli": { "type": "ingredient", "settings": { "emoji": "🌿", "name": "Patchouli", "position": "br" } },
-        "acc_howto": {
-          "type": "accordion",
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
           "settings": {
-            "title": "How To Use",
-            "body": "<p>Apply 2–3 pumps to clean skin, morning and evening. Massage in circular motions until absorbed. Use on arms, chest, thighs and tums.</p>"
-          }
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "icons_style": "none",
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
-        "acc_shipping": {
-          "type": "accordion",
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
           "settings": {
-            "title": "Shipping & Delivery",
-            "body": "<p>Free priority worldwide shipping. Most orders arrive in 5–7 business days. Track from your account at any time.</p>"
-          }
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 28,
+            "sticky_details_desktop": true,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-1",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_icgrde": {
+              "type": "group",
+              "name": "Header",
+              "settings": {
+                "open_in_new_tab": false,
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xrnftG": {
+                  "type": "text",
+                  "name": "Product title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-primary--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price_tVjtKg": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "color": "var(--color-foreground)",
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xrnftG",
+                "price_tVjtKg"
+              ]
+            },
+            "divider_VJhene": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "show_pickup_availability": false,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "Product description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "group_icgrde",
+            "divider_VJhene",
+            "variant_picker_R3rGDr",
+            "buy_buttons_eYQEYi",
+            "text_aEtTtq"
+          ]
         }
       },
-      "block_order": ["ing_almond", "ing_primrose", "ing_rosehip", "ing_patchouli", "acc_howto", "acc_shipping"],
       "settings": {
-        "lbl_tl": "MAISON",
-        "lbl_tr": "LUXURY BODY OIL",
-        "review_count": "21,317",
-        "subtitle": "Plumps, tightens, firms and hydrates skin",
-        "show_clinicians_choice": true,
-        "clinicians_count": "711",
-        "show_review_snippet": true,
-        "show_beware": true,
-        "perfect_for": "Perfect for arms, chest, thighs and tums. Suitable for full body use.",
-        "show_sticky": true,
-        "show_trustpilot": true
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 48,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
-    "smooth_divine": {
-      "type": "ml-smooth-divine",
+    "product_recommendations_qggXJq": {
+      "type": "product-recommendations",
       "blocks": {
-        "z1": { "type": "zone", "settings": { "zone": "chest", "label": "Chest" } },
-        "z2": { "type": "zone", "settings": { "zone": "thighs", "label": "Thighs" } }
+        "text_cbcgyb": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h3>You may also like </h3>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_DNizbJ": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_M7MJkb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gLWgA6": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_DNizbJ",
+            "product_title_M7MJkb",
+            "price_gLWgA6"
+          ]
+        }
       },
-      "block_order": ["z1", "z2"],
-      "settings": {}
-    },
-    "big_test": {
-      "type": "ml-big-testimonial",
-      "settings": {}
-    },
-    "embrace": {
-      "type": "ml-embrace",
-      "settings": {}
-    },
-    "pdp_trust": {
-      "type": "ml-pdp-trust",
-      "blocks": {
-        "t1": { "type": "cell", "settings": { "icon": "✈", "title": "Worldwide Shipping", "body": "We ship to 220+ countries worldwide." } },
-        "t2": { "type": "cell", "settings": { "icon": "✿", "title": "100% Natural", "body": "Nourish using pure & natural ingredients only." } },
-        "t3": { "type": "cell", "settings": { "icon": "♻", "title": "Climate+", "body": "Every purchase contributes to our tree planting efforts." } }
-      },
-      "block_order": ["t1", "t2", "t3"],
-      "settings": {}
-    },
-    "reviews_wall": {
-      "type": "ml-reviews-wall",
-      "blocks": {
-        "r1": { "type": "review", "settings": { "author": "Vivian A.", "verified": true, "date": "05/09/2026", "body": "I'm 78 and love my facial complexion. It is so smooth and supple. My skin easily absorbs the nourishing oils. I love this product. It's truly magical!" } },
-        "r2": { "type": "photo" },
-        "r3": { "type": "review", "settings": { "author": "Deborah M.", "verified": true, "date": "05/05/2026", "body": "I'm 72. I've been using the Maison shower oil and the body oil consistently for a month now. I absolutely love it. I see a huge difference in such a short time." } },
-        "r4": { "type": "video" },
-        "r5": { "type": "photo" },
-        "r6": { "type": "review", "settings": { "author": "Michele M.", "verified": true, "date": "05/06/2026", "body": "I absolutely love this product." } },
-        "r7": { "type": "photo" },
-        "r8": { "type": "review", "settings": { "author": "Christina A.", "verified": true, "date": "05/06/2026", "body": "Skin is so smooth and hydrated. Love it!" } },
-        "r9": { "type": "review", "settings": { "author": "Janet T.", "verified": true, "date": "05/05/2026", "body": "Both my husband and I are using this oil and absolutely love the smell and results." } },
-        "r10": { "type": "photo" }
-      },
-      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10"],
-      "settings": {}
-    },
-    "clinicians": {
-      "type": "ml-clinicians",
-      "blocks": {
-        "cl1": { "type": "clinician", "settings": { "name": "Dr. Samuel Feng, MD", "specialty": "Internal medicine", "years": "21", "title": "Oils reinforce skin barrier to reduce water loss and improve hydration", "highlights": "Softening oils, Flexible seal, Barrier reinforcement" } },
-        "cl2": { "type": "clinician", "settings": { "name": "Dr. Donald G. Nicholas, MD", "specialty": "Internal medicine", "years": "41", "title": "Antioxidants help keep tone even against daily environmental stress", "highlights": "Tone evenness, Complements photoprotection, Antioxidant support" } }
-      },
-      "block_order": ["cl1", "cl2"],
-      "settings": {}
+      "block_order": [
+        "text_cbcgyb"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
-  "order": ["main", "smooth_divine", "big_test", "embrace", "pdp_trust", "reviews_wall", "clinicians"]
+  "order": [
+    "main",
+    "product_recommendations_qggXJq"
+  ]
 }
