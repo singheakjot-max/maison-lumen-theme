@@ -1,0 +1,107 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-trust { padding: 56px 48px; background: var(--ml-white); }
+  .ml-trust-head { text-align: center; margin-bottom: 32px; }
+  .ml-trust-rating-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ml-body);
+    font-size: 13px;
+    color: var(--ml-charcoal);
+  }
+  .ml-trust-rating-line strong { font-weight: 700; }
+  .ml-trust-rating-line .stars { color: var(--ml-honey-deep); font-size: 14px; letter-spacing: 0.08em; }
+  .ml-trust-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ml-trust-card {
+    background: var(--ml-white);
+    border: 1px solid var(--ml-line);
+    padding: 16px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ml-trust-card-stars { color: var(--ml-honey-deep); font-size: 12px; letter-spacing: 0.05em; }
+  .ml-trust-card h5 {
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ml-ink);
+    margin: 0;
+  }
+  .ml-trust-card p { font-size: 12px; color: var(--ml-charcoal); line-height: 1.5; flex: 1; }
+  .ml-trust-card-author { font-size: 11px; color: var(--ml-grey); font-weight: 500; }
+  .ml-trust-foot {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--ml-charcoal);
+  }
+  .ml-trust-foot strong { color: var(--ml-ink); }
+  @media (max-width: 900px) {
+    .ml-trust { padding: 40px 16px; }
+    .ml-trust-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  }
+</style>
+<section class="ml-section ml-trust">
+  <div class="ml-trust-head">
+    <div class="ml-trust-rating-line">
+      <strong>{{ section.settings.headline | default: 'Excellent' }}</strong>
+      <span class="stars">★★★★★</span>
+      <span>{{ section.settings.platform | default: 'Trustpilot' }}</span>
+    </div>
+  </div>
+  <div class="ml-trust-grid">
+    {% for block in section.blocks %}
+      <div class="ml-trust-card" {{ block.shopify_attributes }}>
+        <div class="ml-trust-card-stars">★★★★★</div>
+        <h5>{{ block.settings.title }}</h5>
+        <p>{{ block.settings.body }}</p>
+        <div class="ml-trust-card-author">{{ block.settings.author }}{% if block.settings.meta != blank %}, {{ block.settings.meta }}{% endif %}</div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="ml-trust-foot">
+    Rated <strong>{{ section.settings.rating | default: '4.8' }}</strong> / 5 based on <strong>{{ section.settings.review_count | default: '9,866' }} reviews</strong>. Showing our 5 star reviews.
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Trust Strip",
+  "settings": [
+    { "type": "text", "id": "headline", "label": "Headline word", "default": "Excellent" },
+    { "type": "text", "id": "platform", "label": "Platform name", "default": "Trustpilot" },
+    { "type": "text", "id": "rating", "label": "Average rating", "default": "4.8" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "9,866" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "My package of Maison was..." },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "My package was lost and Maison was very helpful." },
+        { "type": "text", "id": "author", "label": "Author", "default": "PC" },
+        { "type": "text", "id": "meta", "label": "Meta", "default": "16 minutes ago" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison Trust Strip",
+    "blocks": [
+      { "type": "review", "settings": { "title": "My package of Maison was...", "body": "My package was lost and the team was very helpful.", "author": "PC", "meta": "16 minutes ago" } },
+      { "type": "review", "settings": { "title": "Great product", "body": "Love the way it makes my dry skin shimmer.", "author": "Faye Williams", "meta": "3 hours ago" } },
+      { "type": "review", "settings": { "title": "This product lives up to the...", "body": "This product lives up to the actual hype.", "author": "Michelle Reed", "meta": "3 hours ago" } },
+      { "type": "review", "settings": { "title": "Great products", "body": "Great products, good delivery.", "author": "Julie Peel", "meta": "4 hours ago" } },
+      { "type": "review", "settings": { "title": "I've noticed an incredible d...", "body": "I've noticed an incredible difference since using Maison.", "author": "Lori", "meta": "9 hours ago" } }
+    ]
+  }]
+}
+{% endschema %}

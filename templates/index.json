@@ -1,0 +1,128 @@
+{
+  "sections": {
+    "hero": {
+      "type": "ml-hero",
+      "settings": {
+        "eyebrow": "[SPRING SKIN '26]",
+        "heading": "<p>Live Your <em>Maison Lumen</em> Life.</p>",
+        "subtitle": "Luxury botanical body care. Pure, unrefined, and unadulterated. This is skincare as nature intended.",
+        "cta_text": "Shop Now",
+        "cta2_text": "About Us"
+      }
+    },
+    "proof": {
+      "type": "ml-proof",
+      "blocks": {
+        "i1": { "type": "ingredient", "settings": { "emoji": "🌰", "name": "Almond", "position": "tl" } },
+        "i2": { "type": "ingredient", "settings": { "emoji": "✿", "name": "Primrose", "position": "tr" } },
+        "i3": { "type": "ingredient", "settings": { "emoji": "🌹", "name": "Rosehip", "position": "bl" } },
+        "i4": { "type": "ingredient", "settings": { "emoji": "🌿", "name": "Patchouli", "position": "br" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "eyebrow": "PURE INGREDIENTS YOUR SKIN SEEKS",
+        "heading": "<p>Loved by <em>380,000+</em></p>",
+        "body": "Centuries of feminine wisdom captured in a single bottle, restoring softness, firmness, and radiance.",
+        "body2": "An ancient formula specially crafted for you.",
+        "cta_text": "Take Me There"
+      }
+    },
+    "shop_grid": {
+      "type": "ml-shop-grid",
+      "blocks": {
+        "p1": { "type": "product", "settings": { "tag": "★ Best Seller" } },
+        "p2": { "type": "coming_soon", "settings": { "title": "Magic Body Elixir XL — 200ml", "subtitle": "Join the waitlist" } },
+        "p3": { "type": "coming_soon", "settings": { "title": "Lumen Shower Elixir — 150ml", "subtitle": "Join the waitlist" } },
+        "p4": { "type": "coming_soon", "settings": { "title": "Lumen Sculpting Scrub — 200g", "subtitle": "Join the waitlist" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": {
+        "heading": "<p>The Alchemy of <em>Beauty.</em></p>",
+        "subtitle": "Nature's richest beauty secrets, bottled for your daily ritual.",
+        "shop_all_label": "Shop Now"
+      }
+    },
+    "split_shower": {
+      "type": "ml-split",
+      "blocks": {
+        "l1": { "type": "list_item", "settings": { "icon": "❤", "text": "Inspired by ancient bathing rituals" } },
+        "l2": { "type": "list_item", "settings": { "icon": "☼", "text": "Suitable for all skin types" } },
+        "l3": { "type": "list_item", "settings": { "icon": "✿", "text": "Natural & skin loving ingredients" } }
+      },
+      "block_order": ["l1", "l2", "l3"],
+      "settings": {
+        "bg": "cream",
+        "eyebrow": "[A NEW RITUAL]",
+        "heading": "<p>There's A New Way <em>To Glow.</em></p>",
+        "body": "An ancient ritual of oil cleansing, reimagined. Gently purifies while drenching skin in moisture, transforming your daily shower into a deeply sensorial experience. Infused with 7 precious botanical oils.",
+        "cta_text": "Learn More"
+      }
+    },
+    "pure_natural": {
+      "type": "ml-pure-natural",
+      "settings": {
+        "eyebrow": "START LIVING YOUR MAISON LUMEN LIFE",
+        "heading": "<p>Pure. Natural. <span class=\"circled\"><em>Ingredients</em></span></p>",
+        "body": "We pride ourselves on sourcing only the purest and finest ingredients for our products. With a core focus on natural, enabling women around the world to feel the powerful effects of truly natural, clean beauty.",
+        "strip_text": "Real Ingredients. Real Women. Real Results."
+      }
+    },
+    "trust_strip": {
+      "type": "ml-trust-strip",
+      "blocks": {
+        "rv1": { "type": "review", "settings": { "title": "My package of Maison was...", "body": "My package was lost and Gabrielle was very helpful.", "author": "PC", "meta": "16 minutes ago" } },
+        "rv2": { "type": "review", "settings": { "title": "Great product", "body": "love the way it makes my dry skin shimmer. The smell is fresh and clean too.", "author": "Faye Williams", "meta": "3 hours ago" } },
+        "rv3": { "type": "review", "settings": { "title": "This product lives up to th...", "body": "This product lives up to the actual hype!!", "author": "Michelle Reed", "meta": "3 hours ago" } },
+        "rv4": { "type": "review", "settings": { "title": "Great products", "body": "Great products, good delivery.", "author": "Julie Peel", "meta": "4 hours ago" } },
+        "rv5": { "type": "review", "settings": { "title": "I've noticed an incredible d...", "body": "I've noticed an incredible difference since using Maison.", "author": "Lori", "meta": "9 hours ago" } }
+      },
+      "block_order": ["rv1", "rv2", "rv3", "rv4", "rv5"],
+      "settings": {
+        "headline": "Excellent",
+        "platform": "Trustpilot",
+        "rating": "4.8",
+        "review_count": "9,866"
+      }
+    },
+    "about": {
+      "type": "ml-about",
+      "settings": {
+        "eyebrow": "ABOUT US",
+        "heading": "<p>Skin that stays<br>moisturized all day.<br>It's all about <span class=\"hl\">you</span></p>",
+        "body": "Maison Lumen was founded to bring traditional, natural, age-old remedies passed down through heritage. Loving nature and everything natural, we are advocates of organic and pure living.",
+        "cta_text": "Read More"
+      }
+    },
+    "bundle_it_up": {
+      "type": "ml-bundle-it-up",
+      "blocks": {
+        "b1": { "type": "bundle", "settings": { "title": "Glow Duo (2 month supply)", "price": "$153.00", "tag": "★ Best Seller" } },
+        "b2": { "type": "bundle", "settings": { "title": "Plump + Revive Bundle", "price": "$179.00" } },
+        "b3": { "type": "bundle", "settings": { "title": "Body Ritual Kit", "price": "$152.00" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {
+        "eyebrow": "MOST LOVED",
+        "heading": "<p>Bundle <em>it up.</em></p>",
+        "subtitle": "Shop our bundles, perfect for an all-in-one body care ritual."
+      }
+    },
+    "promise": {
+      "type": "ml-promise",
+      "settings": {
+        "heading": "<p>Our Promise,<br><em>Always Natural.</em></p>",
+        "body": "All our products are sustainably sourced and produced using traditional techniques passed down as ancient family recipes.",
+        "cta_text": "Read More"
+      }
+    },
+    "newsletter": {
+      "type": "ml-newsletter",
+      "settings": {
+        "heading": "Stay in touch.",
+        "body": "New collections, products and exclusive offers. Nothing else.",
+        "placeholder": "Your email"
+      }
+    }
+  },
+  "order": ["hero", "proof", "shop_grid", "split_shower", "pure_natural", "trust_strip", "about", "bundle_it_up", "promise", "newsletter"]
+}

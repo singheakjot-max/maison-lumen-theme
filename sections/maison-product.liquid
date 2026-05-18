@@ -1,0 +1,661 @@
+{% render 'maison-vars' %}
+<style>
+  .mp { padding: 36px 48px; background: var(--ml-white); }
+  .mp-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; }
+
+  /* === GALLERY === */
+  .mp-gallery { position: sticky; top: 16px; align-self: start; }
+  .mp-gallery-main {
+    background: var(--ml-tan);
+    aspect-ratio: 1;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mp-gallery-main img { max-width: 70%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(61,36,24,0.25)); }
+  .mp-gallery-main .crown {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--ml-serif);
+    color: var(--ml-brown);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+  }
+  .mp-gallery-main .lbl-tl, .mp-gallery-main .lbl-tr {
+    position: absolute; top: 50px;
+    font-family: var(--ml-serif);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ml-brown);
+  }
+  .mp-gallery-main .lbl-tl { left: 30px; }
+  .mp-gallery-main .lbl-tr { right: 30px; text-align: right; }
+  .mp-ing {
+    position: absolute;
+    width: 86px; height: 86px;
+    border-radius: 50%;
+    background: var(--ml-cream);
+    box-shadow: 0 8px 22px rgba(61,36,24,0.18);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 8px;
+    z-index: 3;
+  }
+  .mp-ing-img { width: 40px; height: 40px; border-radius: 50%; background: var(--ml-tan); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .mp-ing-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .mp-ing-name { font-family: var(--ml-serif); font-size: 11px; color: var(--ml-ink); letter-spacing: 0.02em; }
+  .mp-ing.tl { top: 14%; left: 6%; }
+  .mp-ing.tr { top: 14%; right: 6%; }
+  .mp-ing.bl { bottom: 24%; left: 6%; }
+  .mp-ing.br { bottom: 24%; right: 6%; }
+  .mp-thumbs { display: flex; gap: 6px; margin-top: 10px; }
+  .mp-thumb { width: 64px; height: 64px; border-radius: 4px; overflow: hidden; cursor: pointer; border: 2px solid transparent; }
+  .mp-thumb.active { border-color: var(--ml-ink); }
+  .mp-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* === BUY BOX === */
+  .mp-buy { display: flex; flex-direction: column; gap: 0; }
+  .mp-rating { display: flex; align-items: center; gap: 6px; font-size: 12px; margin-bottom: 6px; }
+  .mp-rating .stars { color: var(--ml-honey-deep); font-size: 14px; letter-spacing: 0.08em; }
+  .mp-subtitle { font-size: 14px; color: var(--ml-charcoal); margin-bottom: 4px; font-style: italic; font-family: var(--ml-serif); }
+  .mp-title {
+    font-family: var(--ml-serif);
+    font-size: clamp(28px, 3.2vw, 38px);
+    font-weight: 400;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    color: var(--ml-ink);
+    margin-bottom: 10px;
+  }
+  .mp-price-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .mp-price { font-family: var(--ml-serif); font-size: 22px; color: var(--ml-ink); font-weight: 500; }
+  .mp-price .was { color: var(--ml-grey); text-decoration: line-through; font-weight: 400; margin-right: 8px; font-size: 18px; }
+  .mp-sub-pill { background: var(--ml-honey); color: var(--ml-ink); font-size: 10px; font-weight: 700; padding: 3px 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .mp-clin-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--ml-serif);
+    font-style: italic;
+    color: var(--ml-brown);
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .mp-clin-tag::before, .mp-clin-tag::after { content: '◇'; font-size: 9px; color: var(--ml-honey-deep); }
+  .mp-clin-meta { font-size: 12px; color: var(--ml-charcoal); line-height: 1.5; margin-bottom: 6px; }
+  .mp-clin-meta a { color: var(--ml-ink); text-decoration: underline; }
+  .mp-review-snippet { font-size: 12px; color: var(--ml-charcoal); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .mp-review-snippet a { color: var(--ml-ink); text-decoration: underline; }
+
+  .mp-beware {
+    background: var(--ml-amber-bg);
+    color: var(--ml-ink);
+    font-size: 12px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    border-radius: 2px;
+  }
+  .mp-beware strong { font-weight: 700; }
+
+  .mp-perfect-for { font-size: 13px; color: var(--ml-charcoal); margin-bottom: 18px; }
+
+  /* === Subscribe & Save card (forest green) === */
+  .mp-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .mp-opt {
+    border: 1.5px solid var(--ml-line);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s;
+    background: var(--ml-white);
+    padding: 14px 16px;
+  }
+  .mp-opt.subscribe.selected { border-color: var(--ml-forest); background: var(--ml-forest); color: var(--ml-cream); }
+  .mp-opt.onetime.selected { border-color: var(--ml-ink); }
+  .mp-opt-head { display: flex; align-items: center; gap: 10px; }
+  .mp-radio { width: 16px; height: 16px; border: 1.5px solid var(--ml-grey); border-radius: 50%; flex-shrink: 0; position: relative; }
+  .mp-opt.subscribe.selected .mp-radio { border-color: var(--ml-cream); }
+  .mp-opt.selected .mp-radio::after { content: ''; position: absolute; inset: 2px; background: var(--ml-ink); border-radius: 50%; }
+  .mp-opt.subscribe.selected .mp-radio::after { background: var(--ml-cream); }
+  .mp-opt-name { font-family: var(--ml-body); font-size: 14px; font-weight: 600; flex: 1; }
+  .mp-opt-price { font-family: var(--ml-body); font-size: 14px; font-weight: 600; }
+  .mp-opt-price .was { color: var(--ml-grey); text-decoration: line-through; font-weight: 400; margin-right: 6px; }
+  .mp-opt.subscribe.selected .mp-opt-price .was { color: var(--ml-cream); opacity: 0.6; }
+  .mp-opt-save-tag {
+    position: absolute;
+    top: -1px;
+    right: 14px;
+    background: var(--ml-honey);
+    color: var(--ml-ink);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 0 0 2px 2px;
+  }
+  .mp-opt-perks { margin-top: 12px; padding-left: 26px; display: none; }
+  .mp-opt.subscribe.selected .mp-opt-perks { display: block; }
+  .mp-opt-perks ul { font-size: 12px; line-height: 1.7; }
+  .mp-opt-perks li::before { content: '✓ '; margin-right: 4px; }
+  .mp-opt-learn { font-size: 11px; text-decoration: underline; margin-top: 8px; display: inline-block; }
+  .mp-deliver { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(245,235,224,0.3); }
+  .mp-deliver-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+  .mp-deliver-pill {
+    width: 100%;
+    background: var(--ml-forest-soft);
+    color: var(--ml-cream);
+    padding: 12px;
+    text-align: center;
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 2px;
+  }
+  .mp-deliver-pill small { display: block; font-size: 11px; opacity: 0.85; margin-top: 2px; font-weight: 400; }
+
+  /* === Bundle selector === */
+  .mp-bundle-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ml-brown); font-weight: 600; margin-bottom: 8px; }
+  .mp-bundles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .mp-bundle-btn {
+    padding: 8px 18px;
+    border: 1.5px solid var(--ml-line);
+    border-radius: 999px;
+    background: var(--ml-white);
+    font-family: var(--ml-body);
+    font-size: 13px;
+    color: var(--ml-ink);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mp-bundle-btn:hover:not(.selected):not(:disabled) { border-color: var(--ml-brown); }
+  .mp-bundle-btn.selected { border-color: var(--ml-forest); background: var(--ml-forest); color: var(--ml-cream); }
+  .mp-bundle-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* === ATC === */
+  .mp-atc {
+    width: 100%;
+    padding: 16px;
+    background: var(--ml-ink);
+    color: var(--ml-cream);
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .mp-atc:hover:not(:disabled) { background: var(--ml-brown); }
+  .mp-atc:disabled { opacity: 0.6; cursor: not-allowed; }
+  .mp-qty-row { display: grid; grid-template-columns: 90px 1fr; gap: 6px; margin-bottom: 8px; }
+  .mp-qty {
+    display: flex; align-items: center;
+    border: 1.5px solid var(--ml-line);
+    border-radius: 2px;
+    height: 52px;
+    padding: 0 4px;
+  }
+  .mp-qty button { width: 28px; height: 28px; font-size: 16px; color: var(--ml-ink); font-weight: 500; }
+  .mp-qty input { flex: 1; border: none; background: transparent; text-align: center; font-family: inherit; font-size: 13px; font-weight: 600; color: var(--ml-ink); outline: none; width: 24px; }
+
+  /* Trustpilot embed */
+  .mp-trustpilot { background: var(--ml-cream); border-top: 2px solid var(--ml-ink); padding: 14px; margin-top: 14px; }
+  .mp-trustpilot-row { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ml-charcoal); margin-bottom: 8px; }
+  .mp-trustpilot-row strong { color: var(--ml-ink); }
+  .mp-trustpilot-row .stars { color: var(--ml-honey-deep); }
+  .mp-trustpilot-quote {
+    background: var(--ml-white);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--ml-charcoal);
+    border-left: 3px solid var(--ml-forest);
+  }
+  .mp-trustpilot-quote .author { font-size: 11px; color: var(--ml-grey); margin-top: 4px; }
+
+  /* Buy It With cross-sell */
+  .mp-bw { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--ml-line); }
+  .mp-bw-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--ml-brown); margin-bottom: 8px; }
+  .mp-bw-card { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--ml-line); border-radius: 2px; }
+  .mp-bw-img { width: 60px; height: 60px; background: var(--ml-tan); border-radius: 2px; flex-shrink: 0; overflow: hidden; }
+  .mp-bw-img img { width: 100%; height: 100%; object-fit: cover; }
+  .mp-bw-info { flex: 1; }
+  .mp-bw-name { font-family: var(--ml-serif); font-size: 14px; color: var(--ml-ink); margin-bottom: 4px; }
+  .mp-bw-quick { font-size: 10px; padding: 5px 12px; border: 1px solid var(--ml-ink); background: transparent; color: var(--ml-ink); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; cursor: pointer; }
+
+  /* Description / details */
+  .mp-desc { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--ml-line); }
+  .mp-desc-head { font-family: var(--ml-serif); font-style: italic; font-size: 15px; color: var(--ml-ink); margin-bottom: 10px; }
+  .mp-desc p { font-size: 13px; color: var(--ml-charcoal); line-height: 1.7; margin-bottom: 10px; }
+  .mp-ing-list { font-size: 13px; color: var(--ml-charcoal); line-height: 1.7; }
+  .mp-ing-list li { padding: 1px 0; }
+  .mp-ing-list li::before { content: '· '; margin-right: 4px; font-weight: 700; }
+
+  /* Accordions */
+  .mp-accs { margin-top: 20px; }
+  .mp-acc { border-bottom: 1px solid var(--ml-line); }
+  .mp-acc:first-child { border-top: 1px solid var(--ml-line); }
+  .mp-acc-head {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--ml-serif);
+    font-size: 15px;
+    color: var(--ml-ink);
+    font-weight: 400;
+  }
+  .mp-acc-head .plus { font-size: 18px; color: var(--ml-ink); transition: transform 0.2s; }
+  .mp-acc.open .mp-acc-head .plus { transform: rotate(45deg); }
+  .mp-acc-body { padding: 0 0 16px; font-size: 13px; line-height: 1.7; color: var(--ml-charcoal); display: none; }
+  .mp-acc.open .mp-acc-body { display: block; }
+
+  /* Sticky ATC */
+  .mp-sticky {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--ml-ink);
+    color: var(--ml-cream);
+    padding: 10px 24px;
+    display: flex; align-items: center; gap: 14px;
+    z-index: 999;
+    transform: translateY(110%);
+    transition: transform 0.3s;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.15);
+  }
+  .mp-sticky.show { transform: translateY(0); }
+  .mp-sticky-thumb { width: 44px; height: 44px; background: var(--ml-cream); border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+  .mp-sticky-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .mp-sticky-info { flex: 1; min-width: 0; }
+  .mp-sticky-name { font-family: var(--ml-serif); font-size: 14px; color: var(--ml-cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mp-sticky-sub { font-size: 10px; opacity: 0.7; }
+  .mp-sticky-btn {
+    background: var(--ml-cream);
+    color: var(--ml-ink);
+    padding: 10px 20px;
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .mp { padding: 16px 16px 80px; }
+    .mp-inner { grid-template-columns: 1fr; gap: 24px; }
+    .mp-gallery { position: relative; top: auto; }
+    .mp-title { font-size: 26px; }
+    .mp-ing { width: 64px; height: 64px; }
+    .mp-ing-img { width: 28px; height: 28px; font-size: 12px; }
+    .mp-ing-name { font-size: 9px; }
+  }
+</style>
+
+{%- if product == blank -%}{%- assign product = closest.product -%}{%- endif -%}
+{%- if product -%}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div class="ml-section mp" id="mp-{{ section.id }}">
+  <div class="mp-inner">
+    <div class="mp-gallery">
+      <div class="mp-gallery-main">
+        <div class="crown">♕</div>
+        <div class="lbl-tl">{{ section.settings.lbl_tl | default: 'MAISON' }}</div>
+        <div class="lbl-tr">{{ section.settings.lbl_tr | default: 'LUXURY BODY OIL' }}</div>
+        {% for block in section.blocks %}
+          {% if block.type == 'ingredient' %}
+            <div class="mp-ing {{ block.settings.position }}" {{ block.shopify_attributes }}>
+              <div class="mp-ing-img">{% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 200 }}" alt="">{% else %}{{ block.settings.emoji | default: '✿' }}{% endif %}</div>
+              <div class="mp-ing-name">{{ block.settings.name }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% if product.featured_image %}
+          <img id="mp-img-{{ section.id }}" src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.title | escape }}">
+        {% endif %}
+      </div>
+      {% if product.images.size > 1 %}
+        <div class="mp-thumbs">
+          {% for image in product.images limit: 5 %}
+            <div class="mp-thumb {% if forloop.first %}active{% endif %}" data-full="{{ image | image_url: width: 1400 }}">
+              <img src="{{ image | image_url: width: 200 }}" alt="">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mp-buy">
+      <div class="mp-rating">
+        <span class="stars">★★★★★</span>
+        <a href="#reviews">({{ section.settings.review_count | default: '21,317' }})</a>
+      </div>
+      <div class="mp-subtitle">{{ section.settings.subtitle | default: 'Plumps, tightens, firms and hydrates skin' }}</div>
+      <h1 class="mp-title">{{ product.title }}</h1>
+      <div class="mp-price-row">
+        <div class="mp-price">
+          {% if current_variant.compare_at_price > current_variant.price %}<span class="was">{{ current_variant.compare_at_price | money }}</span>{% endif %}
+          <span class="now" data-mp-price>{{ current_variant.price | money }}</span>
+        </div>
+        <div class="mp-sub-pill">Subscription · Save 10%</div>
+      </div>
+
+      {% if section.settings.show_clinicians_choice %}
+        <div class="mp-clin-tag">Clinicians' Choice</div>
+        <div class="mp-clin-meta">{{ section.settings.clinicians_count | default: '711' }} clinicians, including dermatologists, share this on <strong>FrontrowMD</strong> without compensation. {% if section.settings.clinicians_link != blank %}<a href="{{ section.settings.clinicians_link }}">Learn more</a>{% endif %}</div>
+      {% endif %}
+
+      {% if section.settings.show_review_snippet %}
+        <div class="mp-review-snippet">
+          😊😊😊 <a href="#reviews">Read their reviews →</a>
+        </div>
+      {% endif %}
+
+      {% if section.settings.show_beware %}
+        <div class="mp-beware">
+          <strong>Beware Of Fakes —</strong> Maison Lumen™ Uses Authentic Natural Ingredients
+        </div>
+      {% endif %}
+
+      <div class="mp-perfect-for">{{ section.settings.perfect_for | default: 'Perfect for arms, chest, thighs and tums. Suitable for full body use.' }}</div>
+
+      <form method="post" action="/cart/add" id="mp-form-{{ section.id }}" data-mp-form>
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-mp-variant>
+
+        <div class="mp-options">
+          <div class="mp-opt subscribe selected" data-plan="subscribe">
+            <div class="mp-opt-save-tag">Save 10% on every order</div>
+            <div class="mp-opt-head">
+              <div class="mp-radio"></div>
+              <div class="mp-opt-name">Subscribe & Save</div>
+              <div class="mp-opt-price">
+                {% if current_variant.compare_at_price > current_variant.price %}<span class="was">{{ current_variant.compare_at_price | money }}</span>{% endif %}
+                {{ current_variant.price | money }}
+              </div>
+            </div>
+            <div class="mp-opt-perks">
+              <ul>
+                <li>Free priority insured delivery, every time</li>
+                <li>Quick & friendly skin care support</li>
+                <li>Exclusive access to early product releases</li>
+                <li>Free gifts at special milestones</li>
+              </ul>
+              <a href="#" class="mp-opt-learn" onclick="return false;">Learn more</a>
+              <div class="mp-deliver">
+                <div class="mp-deliver-label">Deliver every:</div>
+                <div class="mp-deliver-pill">8 weeks<small>Save 10%</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mp-opt onetime" data-plan="onetime">
+            <div class="mp-opt-head">
+              <div class="mp-radio"></div>
+              <div class="mp-opt-name">One-time Purchase</div>
+              <div class="mp-opt-price" data-mp-onetime-price>{{ current_variant.price | money }}</div>
+            </div>
+          </div>
+        </div>
+
+        {% if product.variants.size > 1 %}
+          <div class="mp-bundle-label">Bottle Supply</div>
+          <div class="mp-bundles">
+            {% for variant in product.variants %}
+              <button type="button"
+                      class="mp-bundle-btn {% if variant.id == current_variant.id %}selected{% endif %}"
+                      data-variant-id="{{ variant.id }}"
+                      data-price="{{ variant.price | money }}"
+                      {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="mp-qty-row">
+          <div class="mp-qty">
+            <button type="button" data-mp-minus>−</button>
+            <input type="number" name="quantity" value="1" min="1" max="10" readonly data-mp-qty>
+            <button type="button" data-mp-plus>+</button>
+          </div>
+          <button type="submit" class="mp-atc" data-mp-atc>Add to Cart</button>
+        </div>
+      </form>
+
+      {% if section.settings.show_trustpilot %}
+        <div class="mp-trustpilot">
+          <div class="mp-trustpilot-row">
+            <strong>Excellent</strong>
+            <span class="stars">★★★★★</span>
+            <span>Trustpilot</span>
+          </div>
+          <div class="mp-trustpilot-quote">
+            {{ section.settings.trustpilot_quote | default: '"love the way it makes my dry skin shimmer. The smell is fresh and clean too."' }}
+            <div class="author">— {{ section.settings.trustpilot_author | default: 'Faye Williams, 3 hours ago' }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if section.settings.cross_sell_product %}
+        <div class="mp-bw">
+          <div class="mp-bw-label">Buy It With</div>
+          <div class="mp-bw-card">
+            <div class="mp-bw-img">{% if section.settings.cross_sell_product.featured_image %}<img src="{{ section.settings.cross_sell_product.featured_image | image_url: width: 200 }}" alt="">{% endif %}</div>
+            <div class="mp-bw-info">
+              <div class="mp-bw-name">{{ section.settings.cross_sell_product.title }}</div>
+              <a href="{{ section.settings.cross_sell_product.url }}" class="mp-bw-quick">Quick Buy</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="mp-desc">
+        <div class="mp-desc-head">{{ section.settings.desc_head | default: '"Nourishing Your Skin, Nurturing Your Radiance: A Love Letter to Women Embracing the Beauty of Every Age"' }}</div>
+        <p>{{ section.settings.desc_body | default: 'A luxury body oil that will have you feeling like a queen. Made from 7 cold-pressed natural oils with a beautiful scent. This oil makes your skin plump, radiant and firm whilst providing deep nourishing hydration.' }}</p>
+        <p><strong>The finest ingredients. Pure, unrefined and ethically sourced.</strong></p>
+        <ul class="mp-ing-list">
+          <li><strong>Sweet Almond Oil</strong> — smoothes & deeply hydrates</li>
+          <li><strong>Evening Primrose Oil</strong> — firms & increases elasticity</li>
+          <li><strong>Rosehip</strong> — regenerates & plumps skin</li>
+          <li><strong>Vitamin E</strong> — protects the skin from sun light</li>
+          <li><strong>Geranium</strong> — tightens & revitalises</li>
+          <li><strong>Lavender</strong> — calms inflammation whilst promoting healing</li>
+          <li><strong>Patchouli</strong> — boost natural collagen production & smooths skin</li>
+        </ul>
+      </div>
+
+      <div class="mp-accs">
+        {% for block in section.blocks %}
+          {% if block.type == 'accordion' %}
+            <div class="mp-acc" {{ block.shopify_attributes }}>
+              <button class="mp-acc-head" type="button">{{ block.settings.title }} <span class="plus">+</span></button>
+              <div class="mp-acc-body">{{ block.settings.body }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.show_sticky %}
+    <div class="mp-sticky" data-mp-sticky>
+      <div class="mp-sticky-thumb">
+        {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 200 }}" alt="">{% endif %}
+      </div>
+      <div class="mp-sticky-info">
+        <div class="mp-sticky-name">{{ product.title }}</div>
+        <div class="mp-sticky-sub">{{ current_variant.price | money }} · Free shipping</div>
+      </div>
+      <button type="button" class="mp-sticky-btn" data-mp-sticky-btn>Add to Cart</button>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+(function(){
+  const root = document.getElementById('mp-{{ section.id }}');
+  if (!root) return;
+  const form = root.querySelector('[data-mp-form]');
+  const variantInput = root.querySelector('[data-mp-variant]');
+  const onetimePrice = root.querySelector('[data-mp-onetime-price]');
+  const priceMain = root.querySelector('[data-mp-price]');
+  const atcBtn = root.querySelector('[data-mp-atc]');
+  const qtyInput = root.querySelector('[data-mp-qty]');
+
+  root.querySelectorAll('.mp-opt').forEach(o => {
+    o.addEventListener('click', () => {
+      root.querySelectorAll('.mp-opt').forEach(x => x.classList.remove('selected'));
+      o.classList.add('selected');
+    });
+  });
+
+  root.querySelectorAll('.mp-bundle-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      if (b.disabled) return;
+      root.querySelectorAll('.mp-bundle-btn').forEach(x => x.classList.remove('selected'));
+      b.classList.add('selected');
+      if (variantInput && b.dataset.variantId) variantInput.value = b.dataset.variantId;
+      if (b.dataset.price) {
+        if (onetimePrice) onetimePrice.textContent = b.dataset.price;
+        if (priceMain) priceMain.textContent = b.dataset.price;
+      }
+    });
+  });
+
+  root.querySelector('[data-mp-minus]')?.addEventListener('click', () => {
+    const v = parseInt(qtyInput.value) || 1;
+    if (v > 1) qtyInput.value = v - 1;
+  });
+  root.querySelector('[data-mp-plus]')?.addEventListener('click', () => {
+    const v = parseInt(qtyInput.value) || 1;
+    if (v < 10) qtyInput.value = v + 1;
+  });
+
+  const mainImg = root.querySelector('#mp-img-{{ section.id }}');
+  root.querySelectorAll('.mp-thumb').forEach(t => {
+    t.addEventListener('click', () => {
+      root.querySelectorAll('.mp-thumb').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      if (mainImg && t.dataset.full) mainImg.src = t.dataset.full;
+    });
+  });
+
+  root.querySelectorAll('.mp-acc-head').forEach(h => {
+    h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    atcBtn.disabled = true;
+    const original = atcBtn.textContent;
+    atcBtn.textContent = 'Adding…';
+    try {
+      const fd = new FormData(form);
+      const res = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: fd
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.description || data.message || 'Add to cart failed');
+      document.dispatchEvent(new CustomEvent('cart:added', { detail: data, bubbles: true }));
+      document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true }));
+      const openers = [
+        () => { const el = document.querySelector('cart-drawer-component'); if (el?.show) { el.show(); return true; } },
+        () => { const el = document.querySelector('cart-drawer'); if (el?.show) { el.show(); return true; } },
+        () => { const el = document.querySelector('[data-cart-drawer-toggle]'); if (el) { el.click(); return true; } },
+        () => { const el = document.querySelector('a[href$="/cart"]'); if (el) { el.click(); return true; } },
+      ];
+      for (const fn of openers) { try { if (fn()) break; } catch(e){} }
+      atcBtn.textContent = '✓ Added';
+      setTimeout(() => { atcBtn.textContent = original; atcBtn.disabled = false; }, 1500);
+    } catch (err) {
+      console.error('Cart error:', err);
+      atcBtn.textContent = 'Try Again';
+      setTimeout(() => { atcBtn.textContent = original; atcBtn.disabled = false; }, 3000);
+    }
+  });
+
+  const sticky = root.querySelector('[data-mp-sticky]');
+  const stickyBtn = root.querySelector('[data-mp-sticky-btn]');
+  const buyBox = root.querySelector('.mp-buy');
+  if (sticky && buyBox) {
+    const onScroll = () => {
+      const r = buyBox.getBoundingClientRect();
+      if (r.bottom < 0) sticky.classList.add('show');
+      else sticky.classList.remove('show');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    stickyBtn?.addEventListener('click', () => buyBox.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+})();
+</script>
+
+{%- else -%}
+<div class="ml-section" style="padding: 60px 32px; text-align: center;">
+  <p>Add a product to preview this section.</p>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Maison Product",
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "lbl_tl", "label": "Top-left gallery label", "default": "MAISON" },
+    { "type": "text", "id": "lbl_tr", "label": "Top-right gallery label", "default": "LUXURY BODY OIL" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "21,317" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle (above title)", "default": "Plumps, tightens, firms and hydrates skin" },
+    { "type": "header", "content": "Trust" },
+    { "type": "checkbox", "id": "show_clinicians_choice", "label": "Show Clinicians' Choice tag", "default": true },
+    { "type": "text", "id": "clinicians_count", "label": "Clinicians count", "default": "711" },
+    { "type": "url", "id": "clinicians_link", "label": "Clinicians 'Learn more' link" },
+    { "type": "checkbox", "id": "show_review_snippet", "label": "Show 'read their reviews' snippet", "default": true },
+    { "type": "checkbox", "id": "show_beware", "label": "Show 'Beware of fakes' tag", "default": true },
+    { "type": "text", "id": "perfect_for", "label": "Perfect for line", "default": "Perfect for arms, chest, thighs and tums. Suitable for full body use." },
+    { "type": "header", "content": "Sticky + Trustpilot" },
+    { "type": "checkbox", "id": "show_sticky", "label": "Show sticky ATC bar", "default": true },
+    { "type": "checkbox", "id": "show_trustpilot", "label": "Show inline Trustpilot snippet", "default": true },
+    { "type": "textarea", "id": "trustpilot_quote", "label": "Trustpilot quote", "default": "\"love the way it makes my dry skin shimmer.\"" },
+    { "type": "text", "id": "trustpilot_author", "label": "Trustpilot author", "default": "Faye Williams, 3 hours ago" },
+    { "type": "header", "content": "Cross-sell" },
+    { "type": "product", "id": "cross_sell_product", "label": "Buy It With product" },
+    { "type": "header", "content": "Description block" },
+    { "type": "richtext", "id": "desc_head", "label": "Description headline (italic)", "default": "<p>\"Nourishing Your Skin, Nurturing Your Radiance: A Love Letter to Women Embracing the Beauty of Every Age\"</p>" },
+    { "type": "textarea", "id": "desc_body", "label": "Description body", "default": "A luxury body oil that will have you feeling like a queen. Made from 7 cold-pressed natural oils with a beautiful scent." }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient bubble (in gallery)",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "emoji", "label": "Or emoji", "default": "✿" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Almond" },
+        { "type": "select", "id": "position", "label": "Corner", "default": "tl", "options": [
+          { "value": "tl", "label": "Top left" },
+          { "value": "tr", "label": "Top right" },
+          { "value": "bl", "label": "Bottom left" },
+          { "value": "br", "label": "Bottom right" }
+        ]}
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "How To Use" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Apply 2–3 pumps to clean skin, morning and evening.</p>" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-revwall { padding: 80px 48px; background: var(--ml-white); }
+  .ml-revwall-head { text-align: center; max-width: 880px; margin: 0 auto 36px; }
+  .ml-revwall-head .stars { color: var(--ml-honey-deep); font-size: 18px; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .ml-revwall-head h2 { font-family: var(--ml-serif); font-size: clamp(28px, 3vw, 38px); font-weight: 400; color: var(--ml-ink); margin-bottom: 6px; }
+  .ml-revwall-head a { font-size: 12px; color: var(--ml-charcoal); border-bottom: 1px solid var(--ml-ink); padding-bottom: 1px; }
+  .ml-revwall-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .ml-rev {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--ml-tan);
+  }
+  .ml-rev.text { background: var(--ml-cream); padding: 14px; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--ml-line); }
+  .ml-rev.text .ml-rev-stars { color: var(--ml-honey-deep); font-size: 11px; letter-spacing: 0.05em; }
+  .ml-rev.text .ml-rev-author { font-size: 11px; font-weight: 700; color: var(--ml-ink); display: flex; align-items: center; gap: 4px; }
+  .ml-rev.text .ml-rev-verified { font-size: 9px; color: var(--ml-forest); font-weight: 600; }
+  .ml-rev.text .ml-rev-date { font-size: 10px; color: var(--ml-grey); }
+  .ml-rev.text p { font-size: 11px; color: var(--ml-charcoal); line-height: 1.5; }
+  .ml-rev.photo img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-rev.photo.video::after {
+    content: '▶';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--ml-cream);
+    background: rgba(0,0,0,0.5);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    padding-left: 3px; font-size: 12px;
+  }
+  @media (max-width: 900px) { .ml-revwall { padding: 48px 16px; } .ml-revwall-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
+<section class="ml-section ml-revwall" id="reviews">
+  <div class="ml-revwall-head">
+    <div class="stars">★★★★★</div>
+    <h2>{{ section.settings.heading | default: '18,402 Reviews' }}</h2>
+    {% if section.settings.cta_text != blank %}<a href="{{ section.settings.cta_link | default: '#' }}">{{ section.settings.cta_text }}</a>{% endif %}
+  </div>
+  <div class="ml-revwall-grid">
+    {% for block in section.blocks %}
+      {% if block.type == 'photo' or block.type == 'video' %}
+        <div class="ml-rev photo {% if block.type == 'video' %}video{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 600 }}" alt="">{% endif %}
+        </div>
+      {% else %}
+        <div class="ml-rev text" {{ block.shopify_attributes }}>
+          <div class="ml-rev-author">{{ block.settings.author }} {% if block.settings.verified %}<span class="ml-rev-verified">✓ Verified</span>{% endif %}</div>
+          <div class="ml-rev-date">{{ block.settings.date }}</div>
+          <div class="ml-rev-stars">★★★★★</div>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Reviews Wall",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "18,402 Reviews" },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Show more reviews" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video tile (thumbnail only)",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Thumbnail" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Text review",
+      "settings": [
+        { "type": "text", "id": "author", "label": "Author", "default": "Vivian A." },
+        { "type": "checkbox", "id": "verified", "label": "Verified", "default": true },
+        { "type": "text", "id": "date", "label": "Date", "default": "05/09/2026" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "I'm 78 and love my facial complexion." }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison Reviews Wall",
+    "blocks": [
+      { "type": "photo" }, { "type": "video" }, { "type": "photo" }, { "type": "review" }, { "type": "photo" },
+      { "type": "review" }, { "type": "photo" }, { "type": "video" }, { "type": "photo" }, { "type": "review" }
+    ]
+  }]
+}
+{% endschema %}

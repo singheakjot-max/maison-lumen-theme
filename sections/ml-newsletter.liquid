@@ -1,0 +1,36 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-news { padding: 56px 48px; background: var(--ml-white); }
+  .ml-news-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .ml-news h3 { font-family: var(--ml-serif); font-size: 34px; font-weight: 300; line-height: 1; color: var(--ml-ink); margin-bottom: 6px; }
+  .ml-news p { font-size: 13px; color: var(--ml-charcoal); }
+  .ml-news-form { display: flex; border-bottom: 1px solid var(--ml-ink); padding-bottom: 4px; }
+  .ml-news-form input { flex: 1; border: none; background: transparent; padding: 10px 0; font-family: inherit; font-size: 14px; color: var(--ml-ink); outline: none; }
+  .ml-news-form input::placeholder { color: var(--ml-grey); }
+  .ml-news-form button { color: var(--ml-ink); padding: 8px; font-size: 16px; }
+  @media (max-width: 900px) { .ml-news { padding: 40px 20px; } .ml-news-grid { grid-template-columns: 1fr; gap: 20px; } }
+</style>
+<section class="ml-section ml-news">
+  <div class="ml-news-grid">
+    <div>
+      <h3>{{ section.settings.heading | default: 'Stay in touch.' }}</h3>
+      <p>{{ section.settings.body | default: 'New collections, products and exclusive offers. Nothing else.' }}</p>
+    </div>
+    {% form 'customer', class: 'ml-news-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | default: 'Your email' }}" required>
+      <button type="submit" aria-label="Subscribe">→</button>
+    {% endform %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Stay in touch." },
+    { "type": "text", "id": "body", "label": "Body", "default": "New collections, products and exclusive offers. Nothing else." },
+    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Your email" }
+  ],
+  "presets": [{ "name": "Maison Newsletter" }]
+}
+{% endschema %}

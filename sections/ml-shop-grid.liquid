@@ -1,0 +1,171 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-shop { padding: 96px 48px; background: var(--ml-white); }
+  .ml-shop-head { text-align: center; max-width: 880px; margin: 0 auto 56px; }
+  .ml-shop h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(40px, 5vw, 56px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+    color: var(--ml-ink);
+    margin-bottom: 14px;
+  }
+  .ml-shop h2 em { font-style: italic; color: var(--ml-ink); font-weight: 300; }
+  .ml-shop-head p { font-size: 14px; color: var(--ml-charcoal); max-width: 580px; margin: 0 auto; }
+  .ml-shop-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .ml-prod { display: block; position: relative; }
+  .ml-prod-img {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    margin-bottom: 14px;
+    transition: transform 0.3s;
+  }
+  .ml-prod:hover .ml-prod-img { transform: translateY(-3px); }
+  .ml-prod-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .ml-prod-img.bg-1 { background: var(--ml-cream); }
+  .ml-prod-img.bg-2 { background: var(--ml-tan); }
+  .ml-prod-img.bg-3 { background: var(--ml-amber-bg); }
+  .ml-prod-img.bg-4 { background: var(--ml-cream-warm); }
+  .ml-prod-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--ml-honey);
+    color: var(--ml-ink);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    z-index: 2;
+  }
+  .ml-prod h4 {
+    font-family: var(--ml-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ml-ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .ml-prod-price { font-family: var(--ml-body); font-size: 13px; color: var(--ml-charcoal); font-weight: 500; margin-bottom: 4px; }
+  .ml-prod-price .was { color: var(--ml-grey); text-decoration: line-through; margin-right: 6px; }
+  .ml-prod-stars { color: var(--ml-honey-deep); font-size: 11px; letter-spacing: 0.06em; }
+  .ml-prod.coming { pointer-events: none; }
+  .ml-prod.coming .ml-prod-tag { background: var(--ml-ink); color: var(--ml-cream); }
+  .ml-prod-shop-cta { display: block; text-align: center; margin-top: 36px; }
+  .ml-prod-shop-cta a {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-ink);
+    border-bottom: 1px solid var(--ml-ink);
+    padding-bottom: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .ml-shop { padding: 64px 20px; }
+    .ml-shop-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  }
+</style>
+<section class="ml-section ml-shop">
+  <div class="ml-shop-head">
+    <h2>{{ section.settings.heading | default: '<p>The Alchemy of <em>Beauty.</em></p>' }}</h2>
+    <p>{{ section.settings.subtitle | default: "Nature's richest beauty secrets, bottled for your daily ritual." }}</p>
+  </div>
+  <div class="ml-shop-grid">
+    {% for block in section.blocks %}
+      {% assign bg_class = forloop.index | modulo: 4 %}
+      {% case bg_class %}
+        {% when 1 %}{% assign bg = 'bg-1' %}
+        {% when 2 %}{% assign bg = 'bg-2' %}
+        {% when 3 %}{% assign bg = 'bg-3' %}
+        {% else %}{% assign bg = 'bg-4' %}
+      {% endcase %}
+      {% if block.type == 'product' %}
+        {% if block.settings.product %}
+          {% assign p = block.settings.product %}
+          <a href="{{ p.url }}" class="ml-prod" {{ block.shopify_attributes }}>
+            {% if block.settings.tag != blank %}<div class="ml-prod-tag">{{ block.settings.tag }}</div>{% endif %}
+            <div class="ml-prod-img {{ bg }}">
+              {% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 800 }}" alt="{{ p.title | escape }}">{% endif %}
+            </div>
+            <h4>{{ p.title }}</h4>
+            <div class="ml-prod-price">
+              {% if p.compare_at_price > p.price %}<span class="was">{{ p.compare_at_price | money }}</span>{% endif %}
+              From {{ p.price | money }}
+            </div>
+            <div class="ml-prod-stars">★★★★★</div>
+          </a>
+        {% endif %}
+      {% elsif block.type == 'coming_soon' %}
+        <div class="ml-prod coming" {{ block.shopify_attributes }}>
+          <div class="ml-prod-tag">Coming Soon</div>
+          <div class="ml-prod-img {{ bg }}">
+            {% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 800 }}" alt="">{% endif %}
+          </div>
+          <h4>{{ block.settings.title }}</h4>
+          <div class="ml-prod-price">{{ block.settings.subtitle | default: 'Join the waitlist' }}</div>
+          <div class="ml-prod-stars">★★★★★</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% if section.settings.shop_all_link != blank %}
+    <div class="ml-prod-shop-cta">
+      <a href="{{ section.settings.shop_all_link }}">{{ section.settings.shop_all_label | default: 'Shop Now' }}</a>
+    </div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Maison Shop Grid",
+  "settings": [
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>The Alchemy of <em>Beauty.</em></p>" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Nature's richest beauty secrets, bottled for your daily ritual." },
+    { "type": "text", "id": "shop_all_label", "label": "Shop all label", "default": "Shop Now" },
+    { "type": "url", "id": "shop_all_link", "label": "Shop all link" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "tag", "label": "Tag (optional)" }
+      ]
+    },
+    {
+      "type": "coming_soon",
+      "name": "Coming soon",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Magic Body Elixir XL — 200ml" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Join the waitlist" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison Shop Grid",
+    "blocks": [
+      { "type": "product" },
+      { "type": "coming_soon", "settings": { "title": "Magic Body Elixir XL — 200ml" } },
+      { "type": "coming_soon", "settings": { "title": "Lumen Shower Elixir — 150ml" } },
+      { "type": "coming_soon", "settings": { "title": "Lumen Sculpting Scrub — 200g" } }
+    ]
+  }]
+}
+{% endschema %}

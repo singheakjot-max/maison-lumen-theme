@@ -1,0 +1,95 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-pure { padding: 80px 48px; background: var(--ml-white); }
+  .ml-pure-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ml-pure-img { aspect-ratio: 4/3; background: var(--ml-tan); border-radius: 4px; overflow: hidden; }
+  .ml-pure-img img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-pure-text { padding: 20px; }
+  .ml-pure-eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    margin-bottom: 18px;
+  }
+  .ml-pure h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(40px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ml-ink);
+    margin-bottom: 22px;
+  }
+  .ml-pure h2 em { font-style: italic; font-weight: 300; color: var(--ml-ink); }
+  .ml-pure h2 .circled {
+    display: inline-block;
+    padding: 4px 16px 6px;
+    position: relative;
+  }
+  .ml-pure h2 .circled::before {
+    content: '';
+    position: absolute;
+    inset: -4px -10px;
+    border: 2.5px solid var(--ml-honey-deep);
+    border-radius: 50%;
+    transform: rotate(-3deg);
+    pointer-events: none;
+  }
+  .ml-pure-body { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 440px; }
+  .ml-pure-strip {
+    background: var(--ml-honey);
+    color: var(--ml-ink);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 14px 0;
+    margin-top: 56px;
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+  .ml-pure-strip-track { display: inline-block; animation: ml-pure-scroll 30s linear infinite; }
+  .ml-pure-strip-track span { padding: 0 24px; }
+  .ml-pure-strip-track span::after { content: '✦'; margin-left: 24px; color: var(--ml-brown); }
+  @keyframes ml-pure-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @media (max-width: 900px) {
+    .ml-pure { padding: 56px 20px; }
+    .ml-pure-grid { grid-template-columns: 1fr; gap: 28px; }
+    .ml-pure-text { padding: 0; }
+  }
+</style>
+<section class="ml-section ml-pure">
+  <div class="ml-pure-grid">
+    <div class="ml-pure-img">
+      {% if section.settings.image %}<img src="{{ section.settings.image | image_url: width: 1400 }}" alt="">{% endif %}
+    </div>
+    <div class="ml-pure-text">
+      {% if section.settings.eyebrow != blank %}<div class="ml-pure-eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+      <h2>{{ section.settings.heading | default: '<p>Pure. Natural. <span class="circled"><em>Ingredients</em></span></p>' }}</h2>
+      <p class="ml-pure-body">{{ section.settings.body }}</p>
+    </div>
+  </div>
+  {% if section.settings.strip_text != blank %}
+    <div class="ml-pure-strip">
+      <div class="ml-pure-strip-track">
+        {% for i in (1..3) %}<span>{{ section.settings.strip_text }}</span>{% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+{% schema %}
+{
+  "name": "Maison Pure Natural",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image (group of real women, etc.)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "START LIVING YOUR MAISON LUMEN LIFE" },
+    { "type": "richtext", "id": "heading", "label": "Heading (use <span class=\"circled\">word</span> to circle a word)", "default": "<p>Pure. Natural. <span class=\"circled\"><em>Ingredients</em></span></p>" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "We pride ourselves on sourcing only the purest and finest ingredients for our products. With a core focus on natural enabling women around the world to feel the powerful effects of truly natural, clean beauty." },
+    { "type": "text", "id": "strip_text", "label": "Scrolling strip text (leave blank to hide)", "default": "Real Ingredients. Real Women. Real Results." }
+  ],
+  "presets": [{ "name": "Maison Pure Natural" }]
+}
+{% endschema %}

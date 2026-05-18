@@ -1,0 +1,39 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-promise { padding: 80px 48px; background: var(--ml-cream); }
+  .ml-promise-grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .ml-promise-text { padding: 0 20px; }
+  .ml-promise h2 { font-family: var(--ml-serif); font-size: clamp(40px, 5vw, 60px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; color: var(--ml-ink); margin-bottom: 20px; }
+  .ml-promise h2 em { font-style: italic; font-weight: 300; }
+  .ml-promise p { font-size: 14px; color: var(--ml-charcoal); line-height: 1.7; max-width: 440px; margin-bottom: 24px; }
+  .ml-promise-img { aspect-ratio: 1.1; background: var(--ml-tan); border-radius: 4px; overflow: hidden; }
+  .ml-promise-img img { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 900px) { .ml-promise { padding: 56px 20px; } .ml-promise-grid { grid-template-columns: 1fr; gap: 28px; } .ml-promise-text { padding: 0; } }
+</style>
+<section class="ml-section ml-promise">
+  <div class="ml-promise-grid">
+    <div class="ml-promise-text">
+      <h2>{{ section.settings.heading | default: '<p>Our Promise,<br><em>Always Natural.</em></p>' }}</h2>
+      <p>{{ section.settings.body | default: 'All our products are sustainably sourced and produced using traditional techniques passed down as ancient family recipes.' }}</p>
+      {% if section.settings.cta_text != blank %}
+        <a href="{{ section.settings.cta_link | default: '/pages/about' }}" class="ml-btn-solid">{{ section.settings.cta_text }}</a>
+      {% endif %}
+    </div>
+    <div class="ml-promise-img">
+      {% if section.settings.image %}<img src="{{ section.settings.image | image_url: width: 1200 }}" alt="">{% endif %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Our Promise",
+  "settings": [
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Our Promise,<br><em>Always Natural.</em></p>" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "All our products are sustainably sourced and produced using traditional techniques passed down as ancient family recipes." },
+    { "type": "image_picker", "id": "image", "label": "Image (botanicals, ingredients, etc.)" },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Read More" },
+    { "type": "url", "id": "cta_link", "label": "CTA link" }
+  ],
+  "presets": [{ "name": "Maison Our Promise" }]
+}
+{% endschema %}

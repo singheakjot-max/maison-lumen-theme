@@ -1,0 +1,147 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-clin { padding: 80px 48px; background: var(--ml-white); border-top: 1px solid var(--ml-line); }
+  .ml-clin-head { text-align: center; max-width: 880px; margin: 0 auto 36px; }
+  .ml-clin-eyebrow {
+    display: inline-block;
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+    padding: 4px 0;
+    border-top: 1px solid var(--ml-line);
+    border-bottom: 1px solid var(--ml-line);
+    margin-bottom: 16px;
+  }
+  .ml-clin h2 {
+    font-family: var(--ml-serif);
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 400;
+    color: var(--ml-ink);
+    margin-bottom: 8px;
+  }
+  .ml-clin-head p { font-size: 12px; color: var(--ml-grey); }
+  .ml-clin-head a { color: var(--ml-ink); border-bottom: 1px solid var(--ml-ink); padding-bottom: 1px; }
+  .ml-clin-list { max-width: 1080px; margin: 0 auto; }
+  .ml-clinician {
+    display: grid;
+    grid-template-columns: 64px 200px 1fr;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--ml-line);
+    align-items: start;
+  }
+  .ml-clinician-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--ml-tan);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .ml-clinician-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .ml-clinician-meta-name {
+    font-family: var(--ml-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ml-ink);
+    display: flex; align-items: center; gap: 4px;
+    margin-bottom: 4px;
+  }
+  .ml-clinician-meta-name .v { font-size: 10px; color: var(--ml-forest); font-weight: 600; }
+  .ml-clinician-meta-line { font-size: 11px; color: var(--ml-grey); margin-bottom: 2px; display: flex; justify-content: space-between; }
+  .ml-clinician-meta-line strong { color: var(--ml-ink); font-weight: 500; }
+  .ml-clinician-content h5 {
+    font-family: var(--ml-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ml-ink);
+    margin-bottom: 6px;
+  }
+  .ml-clinician-content p { font-size: 12px; color: var(--ml-charcoal); line-height: 1.55; margin-bottom: 6px; }
+  .ml-clinician-highlights {
+    font-size: 10px;
+    color: var(--ml-grey);
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+  .ml-clinician-highlights .h-label { color: var(--ml-ink); font-weight: 600; margin-right: 6px; }
+  .ml-clinician-highlights .h-item::before { content: '☐'; margin-right: 4px; color: var(--ml-grey); }
+  .ml-clin-foot { text-align: center; margin-top: 24px; }
+  .ml-clin-foot small { font-size: 10px; color: var(--ml-grey); }
+  @media (max-width: 900px) {
+    .ml-clin { padding: 48px 16px; }
+    .ml-clinician { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>
+<section class="ml-section ml-clin">
+  <div class="ml-clin-head">
+    <div class="ml-clin-eyebrow">{{ section.settings.eyebrow | default: 'Clinician Reviews' }}</div>
+    <h2>{{ section.settings.heading | default: 'Independent Clinician Evaluations' }}</h2>
+    <p>{{ section.settings.subtitle | default: 'Clinicians receive product samples and are never compensated to submit evaluations.' }} {% if section.settings.learn_link != blank %}<a href="{{ section.settings.learn_link }}">Learn more</a>{% endif %}</p>
+  </div>
+  <div class="ml-clin-list">
+    {% for block in section.blocks %}
+      <div class="ml-clinician" {{ block.shopify_attributes }}>
+        <div class="ml-clinician-avatar">
+          {% if block.settings.image %}<img src="{{ block.settings.image | image_url: width: 200 }}" alt="">{% endif %}
+        </div>
+        <div>
+          <div class="ml-clinician-meta-name">{{ block.settings.name }} <span class="v">✓ Verified clinician</span></div>
+          <div class="ml-clinician-meta-line"><span>Specialty</span> <strong>{{ block.settings.specialty }}</strong></div>
+          <div class="ml-clinician-meta-line"><span>Years in practice</span> <strong>{{ block.settings.years }}</strong></div>
+        </div>
+        <div class="ml-clinician-content">
+          <h5>{{ block.settings.title }}</h5>
+          <p>{{ block.settings.body }}</p>
+          {% if block.settings.highlights != blank %}
+            <div class="ml-clinician-highlights">
+              <span class="h-label">Highlights:</span>
+              {% assign highlights = block.settings.highlights | split: ',' %}
+              {% for h in highlights %}<span class="h-item">{{ h | strip }}</span>{% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="ml-clin-foot">
+    <small>Clinician reviews powered by FrontrowMD</small>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Clinicians",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Clinician Reviews" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Independent Clinician Evaluations" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Clinicians receive product samples and are never compensated to submit evaluations." },
+    { "type": "url", "id": "learn_link", "label": "Learn more link" }
+  ],
+  "blocks": [
+    {
+      "type": "clinician",
+      "name": "Clinician",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Avatar" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Samuel Feng, MD" },
+        { "type": "text", "id": "specialty", "label": "Specialty", "default": "Internal medicine" },
+        { "type": "text", "id": "years", "label": "Years in practice", "default": "21" },
+        { "type": "text", "id": "title", "label": "Review title", "default": "Oils reinforce skin barrier to reduce water loss and improve hydration" },
+        { "type": "textarea", "id": "body", "label": "Review body", "default": "Tight feelings in the skin may mean the skin barrier (it's the thin lipid seal between outer cells) is weak. When that seal is reinforced, TEWL (transepidermal water loss) decreases and leaves the surface smoother." },
+        { "type": "text", "id": "highlights", "label": "Highlights (comma-separated)", "default": "Softening oils, Flexible seal, Barrier reinforcement" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison Clinicians",
+    "blocks": [
+      { "type": "clinician" },
+      { "type": "clinician", "settings": { "name": "Dr. Donald G. Nicholas, MD", "specialty": "Internal medicine", "years": "41", "title": "Antioxidants help keep tone even against daily environmental stress", "highlights": "Tone evenness, Complements photoprotection, Antioxidant support" } }
+    ]
+  }]
+}
+{% endschema %}

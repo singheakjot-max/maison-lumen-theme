@@ -1,0 +1,87 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-bundles { padding: 80px 48px; background: var(--ml-cream); }
+  .ml-bundles-head { max-width: 1180px; margin: 0 auto 36px; }
+  .ml-bundles-eyebrow { font-family: var(--ml-body); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--ml-brown); margin-bottom: 12px; }
+  .ml-bundles h2 { font-family: var(--ml-serif); font-size: clamp(40px, 5vw, 60px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; color: var(--ml-ink); margin-bottom: 10px; }
+  .ml-bundles h2 em { font-style: italic; font-weight: 300; }
+  .ml-bundles-sub { font-size: 14px; color: var(--ml-charcoal); }
+  .ml-bundles-grid { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ml-bundle { display: block; position: relative; }
+  .ml-bundle-img { aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; padding: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; transition: transform 0.3s; }
+  .ml-bundle:hover .ml-bundle-img { transform: translateY(-3px); }
+  .ml-bundle-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .ml-bundle-img.bg-1 { background: var(--ml-tan); }
+  .ml-bundle-img.bg-2 { background: var(--ml-amber-bg); }
+  .ml-bundle-img.bg-3 { background: var(--ml-tan-deep); }
+  .ml-bundle-tag { position: absolute; top: 12px; left: 12px; background: var(--ml-honey); color: var(--ml-ink); font-size: 10px; font-weight: 700; padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.06em; z-index: 2; }
+  .ml-bundle h4 { font-family: var(--ml-serif); font-size: 17px; font-weight: 400; color: var(--ml-ink); line-height: 1.2; margin-bottom: 4px; }
+  .ml-bundle-price { font-size: 13px; color: var(--ml-charcoal); font-weight: 500; }
+  .ml-bundle-stars { color: var(--ml-honey-deep); font-size: 11px; margin-top: 4px; letter-spacing: 0.06em; }
+  @media (max-width: 900px) {
+    .ml-bundles { padding: 56px 20px; }
+    .ml-bundles-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<section class="ml-section ml-bundles">
+  <div class="ml-bundles-head">
+    {% if section.settings.eyebrow != blank %}<div class="ml-bundles-eyebrow">{{ section.settings.eyebrow }}</div>{% endif %}
+    <h2>{{ section.settings.heading | default: '<p>Bundle <em>it up.</em></p>' }}</h2>
+    {% if section.settings.subtitle != blank %}<p class="ml-bundles-sub">{{ section.settings.subtitle }}</p>{% endif %}
+  </div>
+  <div class="ml-bundles-grid">
+    {% for block in section.blocks %}
+      {% assign bg_class = forloop.index | modulo: 3 %}
+      {% case bg_class %}
+        {% when 1 %}{% assign bg = 'bg-1' %}
+        {% when 2 %}{% assign bg = 'bg-2' %}
+        {% else %}{% assign bg = 'bg-3' %}
+      {% endcase %}
+      <a href="{% if block.settings.product %}{{ block.settings.product.url }}{% else %}{{ block.settings.link | default: '#' }}{% endif %}" class="ml-bundle" {{ block.shopify_attributes }}>
+        {% if block.settings.tag != blank %}<div class="ml-bundle-tag">{{ block.settings.tag }}</div>{% endif %}
+        <div class="ml-bundle-img {{ bg }}">
+          {% if block.settings.product and block.settings.product.featured_image %}
+            <img src="{{ block.settings.product.featured_image | image_url: width: 800 }}" alt="">
+          {% elsif block.settings.image %}
+            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="">
+          {% endif %}
+        </div>
+        <h4>{% if block.settings.product %}{{ block.settings.product.title }}{% else %}{{ block.settings.title }}{% endif %}</h4>
+        <div class="ml-bundle-price">{% if block.settings.product %}From {{ block.settings.product.price | money }}{% else %}{{ block.settings.price }}{% endif %}</div>
+        <div class="ml-bundle-stars">★★★★★</div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison Bundle It Up",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "MOST LOVED" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Bundle <em>it up.</em></p>" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Shop our bundles, perfect for an all in one body care ritual." }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle card",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product (preferred)" },
+        { "type": "image_picker", "id": "image", "label": "Or upload image" },
+        { "type": "text", "id": "title", "label": "Title (if no product)", "default": "Glow Duo" },
+        { "type": "text", "id": "price", "label": "Price (if no product)", "default": "$153.00" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "★ Best Seller" },
+        { "type": "url", "id": "link", "label": "Link (if no product)" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison Bundle It Up",
+    "blocks": [
+      { "type": "bundle", "settings": { "title": "Glow Duo (2 month supply)", "price": "$153.00", "tag": "★ Best Seller" } },
+      { "type": "bundle", "settings": { "title": "Plump + Revive Bundle", "price": "$179.00" } },
+      { "type": "bundle", "settings": { "title": "Body Ritual Kit", "price": "$152.00" } }
+    ]
+  }]
+}
+{% endschema %}

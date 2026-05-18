@@ -1,0 +1,48 @@
+{% render 'maison-vars' %}
+<style>
+  .ml-pdp-trust { padding: 36px 48px; background: var(--ml-white); border-top: 1px solid var(--ml-line); border-bottom: 1px solid var(--ml-line); }
+  .ml-pdp-trust-grid { max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .ml-pdp-trust-cell { text-align: center; padding: 0 16px; }
+  .ml-pdp-trust-icon { font-size: 18px; margin-bottom: 6px; color: var(--ml-ink); }
+  .ml-pdp-trust-cell h5 { font-family: var(--ml-serif); font-size: 15px; font-weight: 500; color: var(--ml-ink); margin-bottom: 4px; }
+  .ml-pdp-trust-cell p { font-size: 12px; color: var(--ml-grey); line-height: 1.5; }
+  @media (max-width: 900px) {
+    .ml-pdp-trust { padding: 28px 16px; }
+    .ml-pdp-trust-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+<section class="ml-section ml-pdp-trust">
+  <div class="ml-pdp-trust-grid">
+    {% for block in section.blocks %}
+      <div class="ml-pdp-trust-cell" {{ block.shopify_attributes }}>
+        <div class="ml-pdp-trust-icon">{{ block.settings.icon | default: '✦' }}</div>
+        <h5>{{ block.settings.title }}</h5>
+        <p>{{ block.settings.body }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Maison PDP Trust Strip",
+  "blocks": [
+    {
+      "type": "cell",
+      "name": "Trust cell",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon/emoji", "default": "✈" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Worldwide Shipping" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "We ship to 220+ countries worldwide." }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Maison PDP Trust Strip",
+    "blocks": [
+      { "type": "cell", "settings": { "icon": "✈", "title": "Worldwide Shipping", "body": "We ship to 220+ countries worldwide." } },
+      { "type": "cell", "settings": { "icon": "✿", "title": "100% Natural", "body": "Nourish using pure & natural ingredients only." } },
+      { "type": "cell", "settings": { "icon": "♻", "title": "Climate+", "body": "Every purchase contributes to our tree planting efforts." } }
+    ]
+  }]
+}
+{% endschema %}

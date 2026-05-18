@@ -1,0 +1,176 @@
+{% comment %}
+  Maison Lumen — design tokens
+  Heritage apothecary DTC. Palette tied to our brown amber bottle.
+  Cream/white surface · bottle-brown text · warm tan section bg · honey accent.
+{% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* SURFACE — white-led, warm */
+    --ml-white: #FFFFFF;
+    --ml-cream: #FAF5EE;          /* Besque-style warm cream */
+    --ml-cream-warm: #F0E6D6;     /* slightly deeper cream */
+    --ml-tan: #E8DAC4;            /* product label tan, soft pastel bg */
+    --ml-tan-deep: #D4B89A;       /* deeper warm tan */
+    --ml-sand: #C9A87C;           /* warm sand, deeper section bg */
+
+    /* TEXT — bottle brown family */
+    --ml-brown: #3D2418;          /* the bottle itself, primary dark */
+    --ml-brown-deep: #2B1810;     /* deepest brown */
+    --ml-ink: #1A1414;            /* near-black for headlines */
+    --ml-charcoal: #2C2522;
+    --ml-grey: #6B5F5A;
+    --ml-grey-soft: #9C8F89;
+    --ml-line: #E5DCC9;           /* hairlines on cream */
+    --ml-line-soft: #EFE8DA;
+
+    /* ACCENTS — honey/amber, used very sparingly */
+    --ml-honey: #E8B871;          /* pale honey/butter highlight */
+    --ml-honey-deep: #C99655;     /* deeper amber */
+    --ml-amber-bg: #F5E3C7;       /* amber-tinted soft bg for highlight oval/tag */
+
+    /* TRUST signal — forest green like Besque uses */
+    --ml-forest: #2D4A2B;
+    --ml-forest-soft: #3D5F3B;
+
+    /* TYPE */
+    --ml-serif: 'Fraunces', 'Times New Roman', Georgia, serif;
+    --ml-body: 'Inter', -apple-system, sans-serif;
+
+    /* Legacy aliases — preserve any sections still referencing old names */
+    --ml-burgundy: var(--ml-brown);
+    --ml-burgundy-deep: var(--ml-brown-deep);
+    --ml-burgundy-soft: var(--ml-brown);
+    --ml-cream-soft: var(--ml-cream);
+    --ml-gold: var(--ml-honey);
+    --ml-gold-deep: var(--ml-honey-deep);
+    --ml-gold-soft: var(--ml-honey);
+    --ml-gold-bg: var(--ml-amber-bg);
+    --ml-pink: var(--ml-honey);
+    --ml-pink-soft: var(--ml-honey);
+    --ml-pink-bg: var(--ml-amber-bg);
+    --ml-display: var(--ml-serif);
+  }
+
+  /* BASE */
+  .ml-section {
+    font-family: var(--ml-body);
+    color: var(--ml-ink);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background: var(--ml-white);
+  }
+  .ml-section *, .ml-section *::before, .ml-section *::after { box-sizing: border-box; }
+  .ml-section img { max-width: 100%; display: block; }
+  .ml-section a { color: inherit; text-decoration: none; }
+  .ml-section button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; }
+  .ml-section ul { padding: 0; margin: 0; list-style: none; }
+
+  /* HEADLINES — Fraunces, classical DTC serif */
+  .ml-section h1, .ml-section h2, .ml-section h3 {
+    font-family: var(--ml-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    text-transform: none;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    color: var(--ml-ink);
+  }
+  .ml-section h4 {
+    font-family: var(--ml-serif);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    text-transform: none;
+    color: var(--ml-ink);
+  }
+  /* Italic emphasis in headlines (Besque uses this everywhere) */
+  .ml-section h1 em, .ml-section h2 em, .ml-section h3 em, .ml-section h4 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ml-honey-deep);
+  }
+
+  /* INLINE STRONG in body copy = Inter semibold, not display */
+  .ml-section p strong, .ml-section li strong, .ml-section span strong {
+    font-family: var(--ml-body);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ml-ink);
+  }
+
+  /* SMALL CAPS EYEBROWS — Besque pattern */
+  .ml-section .ml-eyebrow, .ml-section .eyebrow {
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ml-brown);
+  }
+
+  /* BUTTONS — black solid, restrained, all-caps, small */
+  .ml-section .ml-btn,
+  .ml-section .ml-btn-solid {
+    display: inline-block;
+    padding: 13px 28px;
+    background: var(--ml-ink);
+    color: var(--ml-cream);
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1.5px solid var(--ml-ink);
+    border-radius: 0;
+    text-align: center;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .ml-section .ml-btn-solid:hover { background: var(--ml-brown); border-color: var(--ml-brown); color: var(--ml-cream); }
+
+  .ml-section .ml-btn-outline {
+    display: inline-block;
+    padding: 13px 28px;
+    background: transparent;
+    color: var(--ml-ink);
+    font-family: var(--ml-body);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1.5px solid var(--ml-ink);
+    border-radius: 0;
+    text-align: center;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .ml-section .ml-btn-outline:hover { background: var(--ml-ink); color: var(--ml-cream); }
+
+  /* HIGHLIGHT OVAL — Besque-style hand-drawn circle around a word */
+  .ml-section .ml-highlight-oval {
+    display: inline-block;
+    padding: 4px 14px 6px;
+    position: relative;
+  }
+  .ml-section .ml-highlight-oval::before {
+    content: '';
+    position: absolute;
+    inset: -2px -8px;
+    border: 2px solid var(--ml-honey-deep);
+    border-radius: 50%;
+    transform: rotate(-3deg);
+    pointer-events: none;
+  }
+
+  /* HIGHLIGHT BLOCK — solid amber bg under a word */
+  .ml-section .ml-highlight-block {
+    background: var(--ml-honey);
+    padding: 0 8px 2px;
+    color: var(--ml-ink);
+  }
+</style>
